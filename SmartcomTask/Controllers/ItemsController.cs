@@ -123,5 +123,23 @@ namespace SmartcomTask.Controllers
             }   
             return Json(new ActionConfirmResult { Errors = ModelState.SelectMany(s => s.Value.Errors.Select(e => e.ErrorMessage)).ToList() });
         }
+
+
+
+
+
+
+        [HttpPost]
+        public async Task<JsonResult> Delete(Guid Id)
+        {
+            dataManager.itemsRepository.DeleteItem(Id);
+            await dataManager.Commit();
+
+            return Json(new ActionConfirmResult());
+        }
+
+
+
+
     }
 }

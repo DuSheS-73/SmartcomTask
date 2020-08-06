@@ -1,9 +1,9 @@
 import Vue from 'vue';
-//import HomeComponent from "../Items/index.vue";
+import HomeComponent from "./index.vue";
 
 new Vue({
     el: "#app",
     components: {
-        //'home-component': HomeComponent
+        'home-component': HomeComponent
     }
 });
