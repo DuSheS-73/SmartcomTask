@@ -18,5 +18,6 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 .vs/*
+SmartcomTask/.vs/*
 SmartcomTask/node_modules/*
 SmartcomTask/package-lock.json

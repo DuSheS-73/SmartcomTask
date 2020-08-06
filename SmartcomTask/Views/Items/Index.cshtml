@@ -5,7 +5,7 @@
 
 <div id="app">
     <index-component :is-admin="@isAdmin.ToString().ToLower()" items-url="@Url.Action("ItemsData", "Items")"
-                    edit-item-url="@Url.Action("Edit")"></index-component>
+                    edit-url="@Url.Action("Edit", "Items")" create-url="@Url.Action("Create", "Items")"></index-component>
 </div>
 
 @section scripts{ 

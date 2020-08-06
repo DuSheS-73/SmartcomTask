@@ -32,7 +32,7 @@
                         {{ item.category }}
                     </td>
                     <td>
-                        <a v-if="isAdmin" :href="EditItemUrl + '/' + item.id">Edit</a>
+                        <a v-if="isAdmin" :href="EditUrl + '/' + item.id">Edit</a>
                     </td>
                 </tr>
             </tbody>
@@ -54,27 +54,28 @@ import Axios from "axios"
         props: {
             isAdmin: Boolean,
             ItemsUrl: String,
-            //EditItemUrl: String
+            EditUrl: String,
+            CreateUrl: String
         },
         data() {
             return {
-                GetItemsUrl: './Items/ItemsData',
-                EditItemUrl: '/Items/Edit',
-                CreateUrl: './Items/Create',
-
                 items: [],
             }
         },
         mounted() {
-            Axios
-                .get(this.ItemsUrl)
-                .then(response => {
-                    console.log(response);
-                    this.items = response.data;
-                })
-                .catch(error => {
-                    console.log(error);
-                })
+            var base = this;
+
+            new Promise(function (resolve, reject) {
+                Axios
+                    .get(base.ItemsUrl)
+                    .then(response => {
+                        console.log(response);
+                        base.items = response.data;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            });   
         }
     };
 </script>
