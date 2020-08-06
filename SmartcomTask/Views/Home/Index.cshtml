@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Home page";
+    bool isAdmin = User.IsInRole("Admin");
+}
+
+<div id="app">
+    <h1>Home Page</h1>
+    <a href="@Url.Action("Index", "Items")">Items</a>
+    @*<home-component :is-admin="@isAdmin.ToString().ToLower()" items-url="@Url.Action("ItemsData", "Items")"
+                    edit-item-url="@Url.Action("Edit", "Items")" ></home-component>*@
+</div>
+
+@section scripts{
+    <script src="~/js/home.js" asp-append-version="true"></script>
+}

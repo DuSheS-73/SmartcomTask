@@ -1,0 +1,19 @@
+﻿<header id="header">
+    <div class="">
+
+    </div>
+
+    <div class="navigation">
+
+    </div>
+
+    <div class="user-info">
+        @if(User.Identity.IsAuthenticated)
+        {
+            <span>@User.Identity.Name</span>
+            <a href="@Url.Action("Logout", "Account")">Выход</a>
+        }
+    </div>
+
+    
+</header>

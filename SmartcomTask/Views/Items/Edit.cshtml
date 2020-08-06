@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Edit Item";
+}
+
+<div id="app">
+    <edit-component edit-url="@Url.Action("Edit", "Items", new { Id = ViewBag.Id })"
+                    details-url="@Url.Action("ItemDetails", "Items", new { Id = ViewBag.Id })"></edit-component>
+</div>
+
+@section scripts{
+    <script src="~/js/items.js" asp-append-version="true"></script>
+}
