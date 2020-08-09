@@ -1,3 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Create customer";
 }
+
+<div id="app">
+    <create-component create-url="@Url.Action("Create", "Customers")" index-url="@Url.Action("Index", "Customers")"></create-component>
+</div>
+
+@section scripts{
+    <script src="~/js/customers.js" asp-append-version="true"></script>
+ }

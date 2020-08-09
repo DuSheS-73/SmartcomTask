@@ -1,25 +1,25 @@
 <template>
     <div class="edit">
-        <h1>Edit item {{ item.code }} / {{ item.name }}</h1>
+        <h1>Edit item {{ customer.code }} / {{ customer.name }}</h1>
         <form>
             <div class="form-group">
-                <label for="item.code" class="form-label">Логин</label>
-                <input v-model="item.code" class="form-input" required />
+                <label for="customer.name" class="form-label">Name</label>
+                <input v-model="customer.name" class="form-input" required />
             </div>
 
             <div class="form-group">
-                <label for="item.name" class="form-label">Пароль</label>
-                <input v-model="item.name" class="form-input" required />
+                <label for="customer.code" class="form-label">Code</label>
+                <input v-model="customer.code" class="form-input" required />
             </div>
 
             <div class="form-group">
-                <label for="item.price" class="form-label">Пароль</label>
-                <input v-model="item.price" class="form-input" required />
+                <label for="customer.address" class="form-label">Address</label>
+                <input v-model="customer.address" class="form-input" required />
             </div>
 
             <div class="form-group">
-                <label for="item.category" class="form-label">Пароль</label>
-                <input v-model="item.category" class="form-input" required />
+                <label for="customer.discount" class="form-label">Discount</label>
+                <input v-model="customer.discount" class="form-input" required />
             </div>
 
             <div class="form-group">
@@ -40,12 +40,12 @@ import Axios from "axios";
 
         data() {
             return {
-                item: {
+                customer: {
                     id: 0,
-                    code: '',
                     name: '',
-                    price: '',
-                    category: ''
+                    code: '',
+                    address: '',
+                    discount: ''
                 }
             }
         },
@@ -57,11 +57,11 @@ import Axios from "axios";
                 new Promise(function (resolve, reject) {
                     Axios
                         .post(base.EditUrl, {
-                            ID: base.item.id,
-                            Code: base.item.code,
-                            Name: base.item.name,
-                            Price: parseInt(base.item.price),
-                            Category: base.item.category
+                            ID: base.customer.id,
+                            Name: base.customer.name,
+                            Code: base.customer.code,
+                            Address: base.customer.address,
+                            Discount: parseInt(base.customer.discount)
                         })
                         .then(res => {
                             //window.location.href = base.IndexUrl;
@@ -78,7 +78,7 @@ import Axios from "axios";
                 Axios
                     .get(base.DetailsUrl)
                     .then(res => {
-                        base.item = res.data;
+                        base.customer = res.data;
                         console.log(res);
                     })
                     .catch(error => { console.log(error); });

@@ -61,7 +61,7 @@ namespace SmartcomTask.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody][Bind("")] Customer model)
+        public async Task<IActionResult> Create([FromBody][Bind("Name","Code","Address","Discount")] Customer model)
         {
             if(ModelState.IsValid)
             {

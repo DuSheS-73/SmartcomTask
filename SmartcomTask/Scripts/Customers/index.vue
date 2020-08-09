@@ -1,46 +1,46 @@
 <template>
-    <div id="items">
+    <div v-if="isAdmin" id="customers">
         <table class="table">
             <thead>
                 <tr>
-                    <th v-if="isAdmin">
-                        Code
-                    </th>
                     <th>
                         Name
                     </th>
                     <th>
-                        Price
+                        Code
                     </th>
                     <th>
-                        Category
+                        Address
+                    </th>
+                    <th>
+                        Discount
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in items">
-                    <td v-if="isAdmin">
-                        {{ item.code }}
-                    </td>
+                <tr v-for="item in customers">
                     <td>
                         {{ item.name }}
                     </td>
                     <td>
-                        {{ item.price }}
+                        {{ item.code }}
                     </td>
                     <td>
-                        {{ item.category }}
+                        {{ item.address }}
                     </td>
                     <td>
-                        <a v-if="isAdmin" :href="EditUrl + '/' + item.id">Edit</a>
-                        <a v-if="isAdmin" href="javascript:window.location.reload();" v-on:click="deleteItem(item.id)">Delete</a>
+                        {{ item.discount }}
+                    </td>
+                    <td>
+                        <a :href="EditUrl + '/' + item.id">Edit</a>
+                        <a href="javascript:window.location.reload();" v-on:click="deleteItem(item.id)">Delete</a>
                     </td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
                     <td>
-                        <a v-if="isAdmin" :href="CreateUrl">Add Item</a>
+                        <a v-if="isAdmin" :href="CreateUrl">Add customer</a>
                     </td>
                 </tr>
             </tfoot>
@@ -61,7 +61,7 @@ import Axios from "axios"
         },
         data() {
             return {
-                items: [],
+                customers: [],
             }
         },
 
@@ -70,8 +70,8 @@ import Axios from "axios"
             deleteItem(id) {
                 var base = this;
 
-                var currentItem = base.items.filter(f => { return f.id === id; })[0];
-                var sure = confirm("Do you want to delete item -> " + currentItem.name + " ( " + currentItem.code + " )? ");
+                var currentItem = base.customers.filter(f => { return f.id === id; })[0];
+                var sure = confirm("Do you want to delete item -> " + currentItem.name + "?");
 
                 if (sure) {
                     new Promise(function (resolve, reject) {
@@ -89,10 +89,10 @@ import Axios from "axios"
 
             new Promise(function (resolve, reject) {
                 Axios
-                    .get(base.ItemsUrl)
+                    .get(base.CustomersUrl)
                     .then(response => {
                         console.log(response);
-                        base.items = response.data;
+                        base.customers = response.data;
                     })
                     .catch(error => {
                         console.log(error);
