@@ -21,7 +21,7 @@ namespace SmartcomTask.Domain.Repositories.EntityFramework
             return context.Customers;
         }
 
-        public Customer GetCustomerById(Guid Id)
+        public Customer GetCustomerById(Guid? Id)
         {
             return context.Customers.FirstOrDefault(c => c.Id == Id);
         }

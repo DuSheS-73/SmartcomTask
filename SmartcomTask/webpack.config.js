@@ -8,7 +8,8 @@ module.exports = {
     entry: {
         account: './Scripts/Account/index.js',
         home: './Scripts/Home/index.js',
-        items: './Scripts/Items/index.js'
+        items: './Scripts/Items/index.js',
+        customers: './Scripts/Customers/index.js'
     },
     output: {
         path: path.resolve(__dirname, './wwwroot/js'),
