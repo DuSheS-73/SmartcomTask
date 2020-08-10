@@ -35,6 +35,7 @@ namespace SmartcomTask
             // dependencies
             services.AddTransient<IItemsRepository, EFItemsRepository>();
             services.AddTransient<ICustomerRepository, EFCustomerRepository>();
+            services.AddTransient<IOrderRepository, EFOrderRepository>();
             services.AddTransient<DataManager>();
 
             // connecting Database context

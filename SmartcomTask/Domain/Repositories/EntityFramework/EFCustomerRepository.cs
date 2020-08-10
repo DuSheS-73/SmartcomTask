@@ -31,6 +31,7 @@ namespace SmartcomTask.Domain.Repositories.EntityFramework
             if (entity.Id == default)
             {
                 context.Entry(entity).State = EntityState.Added;
+                context.Users.FirstOrDefault(c => c.UserName != "Admin" && c.Customer == default).Customer = entity;
             }
             else
             {

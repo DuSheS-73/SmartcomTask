@@ -5,8 +5,7 @@
 
 <div id="app">
     <h1>Home Page</h1>
-    <a href="@Url.Action("Index", "Items")">Items</a>
-    <home-component :is-admin="@isAdmin.ToString().ToLower()" customers-url="@Url.Action("Index", "Customers")"></home-component>
+    <home-component :is-admin="@isAdmin.ToString().ToLower()" items-url="@Url.Action("Index", "Items")" customers-url="@Url.Action("Index", "Customers")"></home-component>
 </div>
 
 @section scripts{

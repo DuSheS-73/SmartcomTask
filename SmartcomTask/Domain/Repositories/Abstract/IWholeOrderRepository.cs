@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace SmartcomTask.Domain.Repositories.Abstract
 {
-    public interface IOrderElementRepository
+    public interface IWholeOrderRepository
     {
-        IQueryable<OrderElement> GetOrderElements();
-        void SaveOrderElement();
-        void DeleteOrderElement();
+        IQueryable<WholeOrder> GetOrdersOrderedByStatus();
+        void SaveOrder(Order order, OrderElement orderElement);
+        
     }
 }

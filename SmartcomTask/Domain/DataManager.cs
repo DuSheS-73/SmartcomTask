@@ -11,13 +11,19 @@ namespace SmartcomTask.Domain
         private readonly AppDbContext context;
         public IItemsRepository itemsRepository { get; set; }
         public ICustomerRepository customerRepository { get; set; }
+        public IOrderRepository orderRepository { get; set; }
 
-        public DataManager(AppDbContext context, IItemsRepository itemRepository, ICustomerRepository customerRepository)
+        public DataManager(AppDbContext context,
+                            IItemsRepository itemsRepository,
+                            ICustomerRepository customerRepository,
+                            IOrderRepository orderRepository)
         {
             this.context = context;
-            this.itemsRepository = itemRepository;
+            this.itemsRepository = itemsRepository;
             this.customerRepository = customerRepository;
-        }  
+            this.orderRepository = orderRepository;
+        }
+
 
         public async Task<int> Commit()
         {

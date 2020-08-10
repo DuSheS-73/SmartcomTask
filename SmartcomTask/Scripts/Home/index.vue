@@ -1,5 +1,6 @@
 <template>
     <div id="items">
+        <a :href="ItemsUrl">All items</a>
         <a v-if="isAdmin" :href="CustomersUrl">Show customers</a>
     </div>
 </template>
@@ -10,6 +11,7 @@ import Axios from "axios"
     export default {
         props: {
             isAdmin: Boolean,
+            ItemsUrl: String,
             CustomersUrl: String
             //ItemsUrl: String,
             //EditUrl: String,

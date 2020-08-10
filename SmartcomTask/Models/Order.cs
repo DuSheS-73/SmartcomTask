@@ -18,7 +18,7 @@ namespace SmartcomTask.Models
 
         [Required]
         [Display(Name = "Дата заказа")]
-        public DateTime OrderDate { get; set; }
+        public DateTime OrderDate = DateTime.Now;
 
         [Display(Name = "Дата доставки")]
         public DateTime ShipmentDate { get; set; }
