@@ -26,6 +26,13 @@ namespace SmartcomTask.Domain.Repositories.EntityFramework
             return context.Customers.FirstOrDefault(c => c.Id == Id);
         }
 
+        //public Customer GetCustomerByUserName(string UserName)
+        //{
+        //    return context.Users.FirstOrDefault(c => c.NormalizedUserName == UserName.ToUpper()).Customer;
+        //}
+
+
+
         public void SaveCustomer(Customer entity)
         {
             if (entity.Id == default)
@@ -42,6 +49,8 @@ namespace SmartcomTask.Domain.Repositories.EntityFramework
         public void DeleteCustomer(Guid Id)
         {
             context.Customers.Remove(new Customer() { Id = Id });
-        }  
+        }
+
+        
     }
 }

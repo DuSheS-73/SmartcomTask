@@ -6,27 +6,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using SmartcomTask.Domain;
 using SmartcomTask.Models;
 
 namespace SmartcomTask.Controllers
 {
     [Authorize]
-    public class HomeController : Controller
+    public class CartController : Controller
     {
-        private readonly DataManager dataManager;
-        public HomeController(DataManager dataManager)
-        {
-            this.dataManager = dataManager;
-        }
-
         public IActionResult Index()
         {
-            HttpContext.Session.SetString("SessionUser", JsonConvert.SerializeObject(user));
-
+            var sessionUser = JsonConvert.DeserializeObject<Customer>(HttpContext.Session.GetString("SessionUser"));
             return View();
         }
-
-        
     }
 }

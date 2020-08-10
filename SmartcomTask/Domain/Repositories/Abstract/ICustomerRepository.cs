@@ -10,6 +10,7 @@ namespace SmartcomTask.Domain.Repositories.Abstract
     {
         IQueryable<Customer> GetCustomers();
         Customer GetCustomerById(Guid? Id);
+        //Customer GetCustomerByUserName(string UserName);
         void SaveCustomer(Customer entity);
         void DeleteCustomer(Guid Id);
     }
