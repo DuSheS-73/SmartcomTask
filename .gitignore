@@ -21,3 +21,4 @@ _ReSharper*/
 SmartcomTask/.vs/*
 SmartcomTask/node_modules/*
 SmartcomTask/package-lock.json
+UnitTests/*

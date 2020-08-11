@@ -10,8 +10,8 @@ using SmartcomTask.Domain;
 namespace SmartcomTask.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200804120434_initial")]
-    partial class initial
+    [Migration("20200810201918_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -105,13 +105,13 @@ namespace SmartcomTask.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("eae66a93-22de-4775-933b-b10a822dd216"),
-                            RoleId = new Guid("cb4deee8-3077-4509-a054-4837748ca623")
+                            UserId = new Guid("cf7a4f48-ea2c-485b-8057-38e30bfea138"),
+                            RoleId = new Guid("f5265764-bf44-4dda-807e-9ae4c964ef48")
                         },
                         new
                         {
-                            UserId = new Guid("087d60aa-d3f3-4680-be1a-18928e5a0d0f"),
-                            RoleId = new Guid("01c19311-f829-4765-a063-826786090ce2")
+                            UserId = new Guid("8d54f14b-d6b6-4810-850e-4523e6418c76"),
+                            RoleId = new Guid("3d8f84e3-8d52-4756-8a1d-df4e2c9566c0")
                         });
                 });
 
@@ -164,15 +164,15 @@ namespace SmartcomTask.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("cb4deee8-3077-4509-a054-4837748ca623"),
-                            ConcurrencyStamp = "3c77c710-070b-4391-8ef0-13dc6176d950",
+                            Id = new Guid("f5265764-bf44-4dda-807e-9ae4c964ef48"),
+                            ConcurrencyStamp = "93dab751-c33a-4927-b43d-c75548ed7d85",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("01c19311-f829-4765-a063-826786090ce2"),
-                            ConcurrencyStamp = "a46cc492-b78c-423a-afe0-6aac7ebc9c70",
+                            Id = new Guid("3d8f84e3-8d52-4756-8a1d-df4e2c9566c0"),
+                            ConcurrencyStamp = "a5f3169f-3990-43a8-98fc-85f96926e6b2",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -251,15 +251,15 @@ namespace SmartcomTask.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("eae66a93-22de-4775-933b-b10a822dd216"),
+                            Id = new Guid("cf7a4f48-ea2c-485b-8057-38e30bfea138"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e763938c-b14b-4540-a36f-bbc5ce365e2e",
+                            ConcurrencyStamp = "76b28b85-bbc0-49df-bd4a-d9905d9eec2b",
                             Email = "admin@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAxcRivp8KxFE36GIG8oQ67ShzKG5OaC9nSmMc9kpUhNNRhkknMUuyqdpgJ44P+Ufg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIm9JSnjCjOYCXjHK74a5lNOO8XDSWfTNC/B7PRc0YJbmiNgg0etg0+h648AHa4+Rg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -267,15 +267,15 @@ namespace SmartcomTask.Migrations
                         },
                         new
                         {
-                            Id = new Guid("087d60aa-d3f3-4680-be1a-18928e5a0d0f"),
+                            Id = new Guid("8d54f14b-d6b6-4810-850e-4523e6418c76"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b99466ef-801b-41bb-be37-3a1419023855",
+                            ConcurrencyStamp = "b9bdd801-618f-4063-8b85-55d341b4176d",
                             Email = "customer@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "CUSTOMER@EMAIL.COM",
                             NormalizedUserName = "CUSTOMER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDUPTeDnBN1IVi/q7ykEVlaV16UHNA10pBTKh2vWZizzmKbwEqodE2yLbmvmRqDL/A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBjP4/qffZRmGL3GL0Isb/3HcjZUYxepKEHHQgKQwFXFJXKyfoZgEtAynvkKyReQGA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -341,9 +341,6 @@ namespace SmartcomTask.Migrations
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("OrderNumber")
                         .HasColumnType("int");
 
@@ -388,6 +385,28 @@ namespace SmartcomTask.Migrations
                     b.HasIndex("OrderID");
 
                     b.ToTable("OrdersElements");
+                });
+
+            modelBuilder.Entity("SmartcomTask.Models.ShoppingCartItem", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ItemID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ShoppingCartID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ItemID");
+
+                    b.ToTable("ShoppingCartItems");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -477,6 +496,13 @@ namespace SmartcomTask.Migrations
                         .HasForeignKey("OrderID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SmartcomTask.Models.ShoppingCartItem", b =>
+                {
+                    b.HasOne("SmartcomTask.Models.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemID");
                 });
 #pragma warning restore 612, 618
         }

@@ -77,11 +77,18 @@ namespace SmartcomTask
             //    x.AddPolicy("AdminArea", policy => { policy.RequireRole("admin"); });
             //});
 
-            services.AddDistributedMemoryCache();
 
-            services.AddSession(opts => {
-                opts.IdleTimeout = TimeSpan.FromSeconds(30);
-            });
+
+
+
+            // Session
+            //services.AddDistributedMemoryCache();
+
+            //services.AddSession(opts => {
+            //    opts.IdleTimeout = TimeSpan.FromSeconds(30);
+            //});
+
+
 
             // adding Controller & Views support
             services.AddControllersWithViews(x =>
@@ -108,7 +115,7 @@ namespace SmartcomTask
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseSession();
+            //app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

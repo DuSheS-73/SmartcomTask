@@ -14,8 +14,7 @@ namespace SmartcomTask.Domain
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderElement> OrdersElements { get; set; }
         public DbSet<Item> Items { get; set; }
-
-        //public DbSet<ApplicationUser> AppUsers { get; set; }
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

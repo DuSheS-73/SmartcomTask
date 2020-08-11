@@ -11,11 +11,11 @@ using SmartcomTask.Models;
 namespace SmartcomTask.Controllers
 {
     [Authorize]
-    public class CartController : Controller
+    public class ShoppingCartController : Controller
     {
         public IActionResult Index()
         {
-            var sessionUser = JsonConvert.DeserializeObject<Customer>(HttpContext.Session.GetString("SessionUser"));
+            //var sessionUser = JsonConvert.DeserializeObject<Customer>(HttpContext.Session.GetString("SessionUser"));
             return View();
         }
     }

@@ -22,7 +22,7 @@ namespace SmartcomTask.Controllers
 
         public IActionResult Index()
         {
-            HttpContext.Session.SetString("SessionUser", JsonConvert.SerializeObject(user));
+            //HttpContext.Session.SetString("SessionUser", JsonConvert.SerializeObject(user));
 
             return View();
         }
