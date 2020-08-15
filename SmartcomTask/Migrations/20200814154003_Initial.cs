@@ -49,7 +49,6 @@ namespace SmartcomTask.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Items", x => x.ID);
-                    table.UniqueConstraint("AK_Items_Price", x => x.Price);
                 });
 
             migrationBuilder.CreateTable(
@@ -102,22 +101,23 @@ namespace SmartcomTask.Migrations
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     CustomerId = table.Column<Guid>(nullable: false),
-                    ShipmentDate = table.Column<DateTime>(nullable: false),
+                    OrderDate = table.Column<DateTime>(nullable: false),
+                    ShipmentDate = table.Column<DateTime>(nullable: true),
                     OrderNumber = table.Column<int>(nullable: false),
                     Status = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.ID);
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Orders_Customers_CustomerId",
                         column: x => x.CustomerId,
@@ -236,7 +236,7 @@ namespace SmartcomTask.Migrations
                 columns: table => new
                 {
                     ID = table.Column<Guid>(nullable: false),
-                    OrderID = table.Column<Guid>(nullable: false),
+                    OrderId = table.Column<Guid>(nullable: false),
                     ItemID = table.Column<Guid>(nullable: false),
                     ItemsCount = table.Column<int>(nullable: false),
                     ItemPrice = table.Column<int>(nullable: false)
@@ -251,45 +251,32 @@ namespace SmartcomTask.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrdersElements_Items_ItemPrice",
-                        column: x => x.ItemPrice,
-                        principalTable: "Items",
-                        principalColumn: "Price");
-                    table.ForeignKey(
-                        name: "FK_OrdersElements_Orders_OrderID",
-                        column: x => x.OrderID,
+                        name: "FK_OrdersElements_Orders_OrderId",
+                        column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { new Guid("f5265764-bf44-4dda-807e-9ae4c964ef48"), "93dab751-c33a-4927-b43d-c75548ed7d85", "Admin", "ADMIN" },
-                    { new Guid("3d8f84e3-8d52-4756-8a1d-df4e2c9566c0"), "a5f3169f-3990-43a8-98fc-85f96926e6b2", "User", "USER" }
-                });
+                values: new object[] { new Guid("838ad23e-7f85-4fa9-bf14-9d5980e6d8fe"), "97d5f6ee-008e-450f-b38c-e7316601a238", "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { new Guid("c3c31431-1ab5-4fa5-a5d0-692cfc313e71"), "be10791b-879b-43ac-a30e-e43334879924", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CustomerId", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[,]
-                {
-                    { new Guid("cf7a4f48-ea2c-485b-8057-38e30bfea138"), 0, "76b28b85-bbc0-49df-bd4a-d9905d9eec2b", null, "admin@email.com", true, false, null, "ADMIN@EMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEIm9JSnjCjOYCXjHK74a5lNOO8XDSWfTNC/B7PRc0YJbmiNgg0etg0+h648AHa4+Rg==", null, false, "", false, "Admin" },
-                    { new Guid("8d54f14b-d6b6-4810-850e-4523e6418c76"), 0, "b9bdd801-618f-4063-8b85-55d341b4176d", null, "customer@email.com", true, false, null, "CUSTOMER@EMAIL.COM", "CUSTOMER", "AQAAAAEAACcQAAAAEBjP4/qffZRmGL3GL0Isb/3HcjZUYxepKEHHQgKQwFXFJXKyfoZgEtAynvkKyReQGA==", null, false, "", false, "Customer" }
-                });
+                values: new object[] { new Guid("1f654d9a-d001-4ced-9160-7cc487441e8a"), 0, "b1817950-33bf-41b7-9bb4-eada7dba0fd8", null, "admin@email.com", true, false, null, "ADMIN@EMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEJrl2u7xtV9DN66i8bMX8+gA+zb6Va+Hi+xHyGsWpMbZi2KTz4gnUQbQTeBahZK0Ww==", null, false, "", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { new Guid("cf7a4f48-ea2c-485b-8057-38e30bfea138"), new Guid("f5265764-bf44-4dda-807e-9ae4c964ef48") });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "UserId", "RoleId" },
-                values: new object[] { new Guid("8d54f14b-d6b6-4810-850e-4523e6418c76"), new Guid("3d8f84e3-8d52-4756-8a1d-df4e2c9566c0") });
+                values: new object[] { new Guid("1f654d9a-d001-4ced-9160-7cc487441e8a"), new Guid("838ad23e-7f85-4fa9-bf14-9d5980e6d8fe") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -321,7 +308,9 @@ namespace SmartcomTask.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_CustomerId",
                 table: "AspNetUsers",
-                column: "CustomerId");
+                column: "CustomerId",
+                unique: true,
+                filter: "[CustomerId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -346,15 +335,9 @@ namespace SmartcomTask.Migrations
                 column: "ItemID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrdersElements_ItemPrice",
+                name: "IX_OrdersElements_OrderId",
                 table: "OrdersElements",
-                column: "ItemPrice",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrdersElements_OrderID",
-                table: "OrdersElements",
-                column: "OrderID");
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCartItems_ItemID",

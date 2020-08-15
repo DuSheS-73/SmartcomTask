@@ -3,7 +3,8 @@
 }
 
 <div id="app">
-    <edit-component edit-url="@Url.Action("Edit", "Customers", new { Id = ViewBag.Id })" details-url="@Url.Action("CustomerDetails", "Customers", new { Id = ViewBag.Id })"></edit-component>
+    <edit-component edit-url="@Url.Action("Edit", "Customers", new { Id = ViewBag.Id })" 
+                    details-url="@Url.Action("CustomerDetails", "Customers", new { Id = ViewBag.Id })"></edit-component>
 </div>
 
 @section scripts{

@@ -32,8 +32,9 @@
                         {{ item.category }}
                     </td>
                     <td>
+                        <a @click="addToCart(item.id)">Add to cart</a>
                         <a v-if="isAdmin" :href="EditUrl + '/' + item.id">Edit</a>
-                        <a v-if="isAdmin" href="javascript:window.location.reload();" v-on:click="deleteItem(item.id)">Delete</a>
+                        <a v-if="isAdmin" @click="deleteItem(item.id)">Delete</a>
                     </td>
                 </tr>
             </tbody>
@@ -57,7 +58,8 @@ import Axios from "axios"
             ItemsUrl: String,
             EditUrl: String,
             CreateUrl: String,
-            DeleteUrl: String
+            DeleteUrl: String,
+            AddToCartUrl: String
         },
         data() {
             return {
@@ -77,6 +79,25 @@ import Axios from "axios"
                     new Promise(function (resolve, reject) {
                         Axios
                             .post(base.DeleteUrl + '/' + currentItem.id)
+                            .then(res => {
+                                console.log(res);
+                                window.location.reload();
+                            })
+                            .catch(error => { console.log(error); });
+                    });
+                }
+            },
+
+            addToCart(id) {
+                var base = this;
+
+                var currentItem = base.items.filter(f => { return f.id === id; })[0];
+                var sure = confirm("Do you want to add item to cart -> " + currentItem.name + "?");
+
+                if (sure) {
+                    new Promise(function (resolve, reject) {
+                        Axios
+                            .post(base.AddToCartUrl, currentItem)
                             .then(res => res)
                             .catch(error => { console.log(error); });
                     });

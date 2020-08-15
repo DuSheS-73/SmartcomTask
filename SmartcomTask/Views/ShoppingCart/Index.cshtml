@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Cart";
+}
+
+<div id="app">
+    <index-component cart-url="@Url.Action("GetCart", "ShoppingCart")"
+                     remove-url="@Url.Action("RemoveFromCart", "ShoppingCart")"
+                     order-url="@Url.Action("MakeOrder", "Orders")"
+                     index-url="@Url.Action("Index", "Home")"></index-component>
+</div>
+
+@section scripts{
+    <script src="~/js/cart.js" asp-append-version="true"></script>
+}

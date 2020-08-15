@@ -8,6 +8,7 @@ namespace SmartcomTask.Models
 {
     public class ApplicationUser : IdentityUser<Guid>
     {
-        public Customer Customer { get; set; }
+        public Guid? CustomerId { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using SmartcomTask.Service;
 
 namespace SmartcomTask.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     public class ItemsController : Controller
     {
         private readonly DataManager dataManager;

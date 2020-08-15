@@ -4,8 +4,12 @@
 }
 
 <div id="app">
-    <index-component :is-admin="@isAdmin.ToString().ToLower()" items-url="@Url.Action("ItemsData", "Items")"
-                    edit-url="@Url.Action("Edit", "Items")" create-url="@Url.Action("Create", "Items")" delete-url="@Url.Action("Delete", "Items")"></index-component>
+    <index-component :is-admin="@isAdmin.ToString().ToLower()" 
+                     items-url="@Url.Action("ItemsData", "Items")"
+                     edit-url="@Url.Action("Edit", "Items")" 
+                     create-url="@Url.Action("Create", "Items")" 
+                     delete-url="@Url.Action("Delete", "Items")"
+                     add-to-cart-url="@Url.Action("AddToCart", "ShoppingCart")"></index-component>
 </div>
 
 @section scripts{ 

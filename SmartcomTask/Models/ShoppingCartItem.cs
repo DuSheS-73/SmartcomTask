@@ -10,7 +10,7 @@ namespace SmartcomTask.Models
     {
         [Key]
         public Guid ID { get; set; }
-        public Item Item { get; set; }
+        public virtual Item Item { get; set; }
         public int Amount { get; set; }
 
         public Guid ShoppingCartID { get; set; }

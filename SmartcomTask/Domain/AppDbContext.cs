@@ -21,46 +21,45 @@ namespace SmartcomTask.Domain
         {
             base.OnModelCreating(builder);
 
-            // ForeignKeys definition
-            //builder.Entity<Order>()
-            //    .HasOne<Customer>()
-            //    .WithMany()
-            //    .HasForeignKey(k => k.CustomerID);
+            // ApplicationUser - Customer
+            builder.Entity<Customer>()
+                .HasOne(c => c.ApplicationUser)
+                .WithOne(k => k.Customer)
+                .HasForeignKey<ApplicationUser>(k => k.CustomerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Order>()
+                .HasOne<Customer>()
+                .WithMany()
+                .HasForeignKey(k => k.CustomerId);
 
             //builder.Entity<OrderElement>()
             //    .HasOne<Order>()
             //    .WithOne()
-            //    .HasForeignKey<OrderElement>(k => k.OrderID);
+            //    .HasForeignKey<OrderElement>(k => k.OrderId)
+            //    .OnDelete(DeleteBehavior.Cascade);
 
-            //builder.Entity<OrderElement>()
-            //    .HasOne<Item>()
-            //    .WithOne()
-            //    //.HasPrincipalKey<Item>(p => p.ID)
-            //    .HasForeignKey<OrderElement>(k => k.ItemID);
-            //    //.OnDelete(DeleteBehavior.NoAction);
-
-            builder.Entity<OrderElement>()
-                .HasOne<Item>()
-                .WithOne()
-                .HasPrincipalKey<Item>(p => p.Price)
-                .HasForeignKey<OrderElement>(k => k.ItemPrice)
-                .OnDelete(DeleteBehavior.NoAction);
-
-
-
-            // Roles definition
+            // To create dependency
             var adminRoleId = Guid.NewGuid();
             var adminId = Guid.NewGuid();
 
-            var userRoleId = Guid.NewGuid();
-            var userId = Guid.NewGuid();
+            //var userRoleId = Guid.NewGuid();
+            //var userId = Guid.NewGuid();
 
-            // DEMO Admin role
+
+            // Add 2 roles by default: "Admin" & "User"
             builder.Entity<ApplicationRole>().HasData(new ApplicationRole
             {
                 Id = adminRoleId,
                 Name = "Admin",
                 NormalizedName = "ADMIN"
+            });
+
+            builder.Entity<ApplicationRole>().HasData(new ApplicationRole
+            {
+                Id = Guid.NewGuid(),
+                Name = "User",
+                NormalizedName = "USER"
             });
 
             // DEMO Admin
@@ -85,32 +84,26 @@ namespace SmartcomTask.Domain
 
 
 
-            // DEMO User role
-            builder.Entity<ApplicationRole>().HasData(new ApplicationRole
-            {
-                Id = userRoleId,
-                Name = "User",
-                NormalizedName = "USER"
-            });
+           
 
-            // DEMO User
-            builder.Entity<ApplicationUser>().HasData(new ApplicationUser
-            {
-                Id = userId,
-                UserName = "Customer",
-                NormalizedUserName = "CUSTOMER",
-                Email = "customer@email.com",
-                NormalizedEmail = "CUSTOMER@EMAIL.COM",
-                EmailConfirmed = true,
-                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "CustomerPass"),
-                SecurityStamp = string.Empty,
-            });
+            //// DEMO User
+            //builder.Entity<ApplicationUser>().HasData(new ApplicationUser
+            //{
+            //    Id = userId,
+            //    UserName = "Customer",
+            //    NormalizedUserName = "CUSTOMER",
+            //    Email = "customer@email.com",
+            //    NormalizedEmail = "CUSTOMER@EMAIL.COM",
+            //    EmailConfirmed = true,
+            //    PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "CustomerPass"),
+            //    SecurityStamp = string.Empty,
+            //});
 
-            builder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
-            {
-                RoleId = userRoleId,
-                UserId = userId
-            });
+            //builder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
+            //{
+            //    RoleId = userRoleId,
+            //    UserId = userId
+            //});
 
 
             // DEMO Customer

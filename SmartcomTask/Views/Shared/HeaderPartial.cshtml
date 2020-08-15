@@ -12,6 +12,12 @@
         {
             <span>@User.Identity.Name</span>
             <a href="@Url.Action("Logout", "Account")">Выход</a>
+            <a href="@Url.Action("Index", "ShoppingCart")">Корзина</a>
+            <a href="@Url.Action("Index", "Orders")">Мои заказы</a>
+        }
+        else
+        {
+            <a href="@Url.Action("Login", "Account")">Войти</a>
         }
     </div>
 

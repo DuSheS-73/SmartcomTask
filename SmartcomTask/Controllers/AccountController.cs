@@ -62,6 +62,7 @@ namespace SmartcomTask.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Registration([FromBody]RegisterViewModel registrationModel)
@@ -75,12 +76,12 @@ namespace SmartcomTask.Controllers
                 NormalizedEmail = registrationModel.Email.ToUpper(),
                 EmailConfirmed = true,
                 SecurityStamp = string.Empty,
-                Customer = new Customer 
+                Customer = new Customer
                 {
                     Id = Guid.NewGuid(),
                     Name = registrationModel.Name,
                     Address = registrationModel.Address,
-                    Code = new Random().Next(1000, 9999).ToString() + "-" + new DateTime().Year.ToString(),
+                    Code = new Random().Next(1000, 9999).ToString() + "-" + new DateTime().Year.ToString("yyyy"),
                     Discount = 0
                 }
             };

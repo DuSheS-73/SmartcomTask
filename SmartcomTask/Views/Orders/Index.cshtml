@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "My orders";
+}
+
+<div id="app">
+    <index-component orders-data-url="@Url.Action("GetOrders", "Orders")"></index-component>
+</div>
+
+@section scripts{ 
+    <script src="~/js/orders.js" asp-append-version="true"></script>
+}

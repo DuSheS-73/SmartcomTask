@@ -8,7 +8,8 @@ namespace SmartcomTask.Domain.Repositories.Abstract
 {
     public interface IOrderRepository
     {
-        IQueryable<Order> GetOrdersByStatus();
+        IQueryable<Order> GetAllOrders();
+        IQueryable<Order> GetOrdersBelongsToCustomer(Guid customerId);
         void SaveOrder(Order entity);
         void DeleteOrder(Guid Id);
     }

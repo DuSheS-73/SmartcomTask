@@ -11,7 +11,6 @@ namespace SmartcomTask.Models
     {
         [Key]
         [Required]
-        [ForeignKey("ItemID")]
         public Guid ID { get; set; }
 
         // Product code, format «XX-XXXX-YYXX» where Х – num , Y - english capital letter
@@ -23,7 +22,6 @@ namespace SmartcomTask.Models
         public string Name { get; set; }
 
         [Display(Name = "Цена")]
-        [ForeignKey("ItemPrice")]
         public int Price { get; set; }
 
         [Display(Name = "Категория товара")]

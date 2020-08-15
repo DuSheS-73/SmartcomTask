@@ -11,7 +11,7 @@ using SmartcomTask.Models;
 
 namespace SmartcomTask.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly DataManager dataManager;
@@ -22,8 +22,7 @@ namespace SmartcomTask.Controllers
 
         public IActionResult Index()
         {
-            //HttpContext.Session.SetString("SessionUser", JsonConvert.SerializeObject(user));
-
+            //Customer customer = dataManager.customerRepository.GetCustomerByUserName(User.Identity.Name);
             return View();
         }
 

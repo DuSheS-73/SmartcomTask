@@ -9,7 +9,9 @@ module.exports = {
         account: './Scripts/Account/index.js',
         home: './Scripts/Home/index.js',
         items: './Scripts/Items/index.js',
-        customers: './Scripts/Customers/index.js'
+        customers: './Scripts/Customers/index.js',
+        cart: './Scripts/ShoppingCart/index.js',
+        orders: './Scripts/Orders/index.js'
     },
     output: {
         path: path.resolve(__dirname, './wwwroot/js'),

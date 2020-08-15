@@ -16,6 +16,7 @@ using SmartcomTask.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using SmartcomTask.Models;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace SmartcomTask
 {
@@ -36,10 +37,30 @@ namespace SmartcomTask
             services.AddTransient<IItemsRepository, EFItemsRepository>();
             services.AddTransient<ICustomerRepository, EFCustomerRepository>();
             services.AddTransient<IOrderRepository, EFOrderRepository>();
+            services.AddTransient<IOrderElementRepository, EFOrderElementRepository>();
             services.AddTransient<DataManager>();
 
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sp => ShoppingCart.GetCart(sp));
+
             // connecting Database context
-            services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Config.ConnectionString));
+            services.AddDbContext<AppDbContext>(x => x.UseLazyLoadingProxies().UseSqlServer(Config.ConnectionString));
+
+            // HTTPS / HSTS configuration
+            services.AddHsts(options =>
+            {
+                options.Preload = true;
+                options.IncludeSubDomains = true;
+                options.MaxAge = TimeSpan.FromDays(60);
+                options.ExcludedHosts.Add("example.com");
+                options.ExcludedHosts.Add("www.example.com");
+            });
+
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+                options.HttpsPort = 5001;
+            });
 
             // Identity system settings
             services.AddIdentity<ApplicationUser, ApplicationRole>(opts =>
@@ -51,13 +72,6 @@ namespace SmartcomTask
                 opts.Password.RequireUppercase = false;
                 opts.Password.RequireDigit = false;
             }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
-
-            //// Identity system settings
-            //services.AddIdentity<IdentityUser, IdentityRole<Guid>>()
-            //    .AddEntityFrameworkStores<AppDbContext>()
-            //    .AddUserManager<UserManager<User>>()
-            //    .AddRoleManager<RoleManager<IdentityRole<Guid>>>()
-            //    .AddDefaultTokenProviders();
 
             // Authentication Cookies settings
             services.ConfigureApplicationCookie(opts =>
@@ -71,32 +85,15 @@ namespace SmartcomTask
 
             services.AddAuthentication();
 
-            //// Authorization policy for Admin area settings
-            //services.AddAuthorization(x =>
-            //{
-            //    x.AddPolicy("AdminArea", policy => { policy.RequireRole("admin"); });
-            //});
-
-
-
-
-
-            // Session
-            //services.AddDistributedMemoryCache();
-
-            //services.AddSession(opts => {
-            //    opts.IdleTimeout = TimeSpan.FromSeconds(30);
-            //});
-
-
 
             // adding Controller & Views support
-            services.AddControllersWithViews(x =>
-            {
-                // connecting area-name with area
-                // x.Conventions.Add(new AdminAreaAuthorization("Admin", "AdminArea"));
-            })
+            services.AddControllersWithViews()
             .SetCompatibilityVersion(CompatibilityVersion.Latest).AddSessionStateTempDataProvider();
+
+            // Session
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+
         }
 
 
@@ -106,6 +103,12 @@ namespace SmartcomTask
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -115,11 +118,10 @@ namespace SmartcomTask
             app.UseAuthentication();
             app.UseAuthorization();
 
-            //app.UseSession();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapControllerRoute("admin", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }

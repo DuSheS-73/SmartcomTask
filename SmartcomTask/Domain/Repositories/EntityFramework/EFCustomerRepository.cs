@@ -26,10 +26,15 @@ namespace SmartcomTask.Domain.Repositories.EntityFramework
             return context.Customers.FirstOrDefault(c => c.Id == Id);
         }
 
-        //public Customer GetCustomerByUserName(string UserName)
-        //{
-        //    return context.Users.FirstOrDefault(c => c.NormalizedUserName == UserName.ToUpper()).Customer;
-        //}
+        public Customer GetCustomerByUserName(string UserName)
+        {
+            if (UserName != null)
+            {
+                var appUser = context.Users.FirstOrDefault(c => c.UserName == UserName);
+                return GetCustomerById(appUser.CustomerId);
+            }
+            return null;
+        }
 
 
 
@@ -38,7 +43,6 @@ namespace SmartcomTask.Domain.Repositories.EntityFramework
             if (entity.Id == default)
             {
                 context.Entry(entity).State = EntityState.Added;
-                context.Users.FirstOrDefault(c => c.UserName != "Admin" && c.Customer == default).Customer = entity;
             }
             else
             {
@@ -46,9 +50,11 @@ namespace SmartcomTask.Domain.Repositories.EntityFramework
             }
         }
 
-        public void DeleteCustomer(Guid Id)
+        public void DeleteCustomer(Guid id)
         {
-            context.Customers.Remove(new Customer() { Id = Id });
+            var customer = context.Customers.FirstOrDefault(c => c.Id == id);
+            context.Entry(customer).State = EntityState.Deleted;
+            //context.Customers.Remove(new Customer { Id = id });
         }
 
         

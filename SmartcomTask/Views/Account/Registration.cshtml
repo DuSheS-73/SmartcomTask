@@ -5,7 +5,8 @@
 
 <h1>Registration</h1>
 <div id="app">
-    <register-component></register-component>
+    <register-component register-url="@Url.Action("Registration", "Account")"
+                        index-url="@Url.Action("Index", "Home")"></register-component>
 </div>
 
 @section scripts{

@@ -16,14 +16,19 @@ namespace SmartcomTask.Domain.Repositories.EntityFramework
             this.context = context;
         }
 
-        public IQueryable<Order> GetOrdersByStatus()
+        public IQueryable<Order> GetAllOrders()
         {
             return context.Orders.OrderBy(c => c.Status);
         }
 
+        public IQueryable<Order> GetOrdersBelongsToCustomer(Guid customerId)
+        {
+           return context.Orders.Where(c => c.CustomerId == customerId).OrderBy(o => o.Status);
+        }
+
         public void SaveOrder(Order entity)
         {
-            if(entity.ID == default)
+            if(entity.Id == default)
             {
                 context.Entry(entity).State = EntityState.Added;
             }
@@ -35,7 +40,7 @@ namespace SmartcomTask.Domain.Repositories.EntityFramework
 
         public void DeleteOrder(Guid Id)
         {
-            context.Orders.Remove(new Order() { ID = Id });
+            context.Orders.Remove(new Order() { Id = Id });
         }
     }
 }

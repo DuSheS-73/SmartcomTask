@@ -12,10 +12,11 @@ namespace SmartcomTask.Models
         public Guid ID { get; set; }
 
         [Required]
-        public Order Order { get; set; }
+        //public Guid OrderId { get; set; }
+        public virtual Order Order { get; set; }
 
         [Required]
-        public Item Item { get; set; }
+        public virtual Item Item { get; set; }
 
         [Required]
         [Display(Name = "Количество")]

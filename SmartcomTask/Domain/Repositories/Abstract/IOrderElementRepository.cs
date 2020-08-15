@@ -9,7 +9,9 @@ namespace SmartcomTask.Domain.Repositories.Abstract
     public interface IOrderElementRepository
     {
         IQueryable<OrderElement> GetOrderElements();
-        void SaveOrderElement();
-        void DeleteOrderElement();
+        IQueryable<OrderElement> GetOrderElementsBelongsToCustomer(Guid customerId);
+        OrderElement GetOrderElementById(Guid Id);
+        void SaveOrderElement(OrderElement entity);
+        void DeleteOrderElement(Guid id);
     }
 }
