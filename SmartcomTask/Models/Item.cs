@@ -9,7 +9,7 @@ namespace SmartcomTask.Models
 {
     public class Item
     {
-        [Key]
+        //[Key]
         [Required]
         public Guid ID { get; set; }
 

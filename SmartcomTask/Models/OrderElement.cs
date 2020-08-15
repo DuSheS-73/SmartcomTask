@@ -16,6 +16,7 @@ namespace SmartcomTask.Models
         public virtual Order Order { get; set; }
 
         [Required]
+        public Guid ItemID { get; set; }
         public virtual Item Item { get; set; }
 
         [Required]

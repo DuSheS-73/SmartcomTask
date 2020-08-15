@@ -131,7 +131,7 @@ namespace SmartcomTask.Migrations
                 columns: table => new
                 {
                     ID = table.Column<Guid>(nullable: false),
-                    ItemID = table.Column<Guid>(nullable: true),
+                    ItemID = table.Column<Guid>(nullable: false),
                     Amount = table.Column<int>(nullable: false),
                     ShoppingCartID = table.Column<Guid>(nullable: false)
                 },
@@ -143,7 +143,7 @@ namespace SmartcomTask.Migrations
                         column: x => x.ItemID,
                         principalTable: "Items",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -249,7 +249,7 @@ namespace SmartcomTask.Migrations
                         column: x => x.ItemID,
                         principalTable: "Items",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_OrdersElements_Orders_OrderId",
                         column: x => x.OrderId,
@@ -261,22 +261,22 @@ namespace SmartcomTask.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("838ad23e-7f85-4fa9-bf14-9d5980e6d8fe"), "97d5f6ee-008e-450f-b38c-e7316601a238", "Admin", "ADMIN" });
+                values: new object[] { new Guid("b74b9078-4ec8-441c-9ed0-d62d3800012f"), "189067c7-265e-44c2-b03d-36c0172997d2", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("c3c31431-1ab5-4fa5-a5d0-692cfc313e71"), "be10791b-879b-43ac-a30e-e43334879924", "User", "USER" });
+                values: new object[] { new Guid("9fe757fa-927f-46fc-8c05-379490553cd1"), "632be5ac-7969-447a-ad96-3afc29e585ae", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CustomerId", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("1f654d9a-d001-4ced-9160-7cc487441e8a"), 0, "b1817950-33bf-41b7-9bb4-eada7dba0fd8", null, "admin@email.com", true, false, null, "ADMIN@EMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEJrl2u7xtV9DN66i8bMX8+gA+zb6Va+Hi+xHyGsWpMbZi2KTz4gnUQbQTeBahZK0Ww==", null, false, "", false, "Admin" });
+                values: new object[] { new Guid("71280e47-ca39-477f-9a82-c7e2fc2c6186"), 0, "76776a7d-c18a-486b-9b3a-79d6d56f1954", null, "admin@email.com", true, false, null, "ADMIN@EMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEFXAzczDeT5sjQtZ8NuvznLGyR4ZsDvjucD4IP3QFHSu9eIVN8YFF+ZSHdqBIhyYhA==", null, false, "", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { new Guid("1f654d9a-d001-4ced-9160-7cc487441e8a"), new Guid("838ad23e-7f85-4fa9-bf14-9d5980e6d8fe") });
+                values: new object[] { new Guid("71280e47-ca39-477f-9a82-c7e2fc2c6186"), new Guid("b74b9078-4ec8-441c-9ed0-d62d3800012f") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -332,7 +332,8 @@ namespace SmartcomTask.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_OrdersElements_ItemID",
                 table: "OrdersElements",
-                column: "ItemID");
+                column: "ItemID",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrdersElements_OrderId",
@@ -342,7 +343,8 @@ namespace SmartcomTask.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCartItems_ItemID",
                 table: "ShoppingCartItems",
-                column: "ItemID");
+                column: "ItemID",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

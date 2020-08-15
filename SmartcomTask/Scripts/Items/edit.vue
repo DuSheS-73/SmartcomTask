@@ -3,27 +3,27 @@
         <h1>Edit item {{ item.code }} / {{ item.name }}</h1>
         <form>
             <div class="form-group">
-                <label for="item.code" class="form-label">�����</label>
+                <label for="item.code" class="form-label">Код товара</label>
                 <input v-model="item.code" class="form-input" required />
             </div>
 
             <div class="form-group">
-                <label for="item.name" class="form-label">������</label>
+                <label for="item.name" class="form-label">Наименование</label>
                 <input v-model="item.name" class="form-input" required />
             </div>
 
             <div class="form-group">
-                <label for="item.price" class="form-label">������</label>
+                <label for="item.price" class="form-label">Цена</label>
                 <input v-model="item.price" class="form-input" required />
             </div>
 
             <div class="form-group">
-                <label for="item.category" class="form-label">������</label>
+                <label for="item.category" class="form-label">Категория</label>
                 <input v-model="item.category" class="form-input" required />
             </div>
 
             <div class="form-group">
-                <input type="button" @click="save" value="�����" class="form-submit-btn" />
+                <input type="button" @click="save" value="Сохранить" class="form-submit-btn" />
             </div>
         </form>
     </div>
@@ -54,21 +54,24 @@ import Axios from "axios";
             save() {
                 var base = this;
 
-                new Promise(function (resolve, reject) {
-                    Axios
-                        .post(base.EditUrl, {
-                            ID: base.item.id,
-                            Code: base.item.code,
-                            Name: base.item.name,
-                            Price: parseInt(base.item.price),
-                            Category: base.item.category
-                        })
-                        .then(res => {
-                            //window.location.href = base.IndexUrl;
-                            console.log(res);
-                        })
-                        .catch(error => { console.log(error); });
-                });
+                var sure = confirm("Сохранить изменения?")
+                if(sure) {
+                    new Promise(function (resolve, reject) {
+                        Axios
+                            .post(base.EditUrl, {
+                                ID: base.item.id,
+                                Code: base.item.code,
+                                Name: base.item.name,
+                                Price: parseInt(base.item.price),
+                                Category: base.item.category
+                            })
+                            .then(res => {
+                                //window.location.href = base.IndexUrl;
+                                console.log(res);
+                            })
+                            .catch(error => { console.log(error); });
+                    });
+                }
             }
         },
 

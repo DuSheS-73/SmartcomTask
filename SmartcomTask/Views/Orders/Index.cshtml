@@ -1,9 +1,13 @@
 ﻿@{
     ViewData["Title"] = "My orders";
+    bool isAdmin = User.IsInRole("Admin");
 }
 
 <div id="app">
-    <index-component orders-data-url="@Url.Action("GetOrders", "Orders")"></index-component>
+    <index-component :is-admin="@isAdmin.ToString().ToLower()"
+                     orders-data-url="@Url.Action("GetOrders", "Orders")"
+                     order-details-url="@Url.Action("GetOrderDetails", "Orders")"
+                     delete-url="@Url.Action("DeleteOrder", "Orders")"></index-component>
 </div>
 
 @section scripts{ 

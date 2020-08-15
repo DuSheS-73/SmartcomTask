@@ -31,23 +31,32 @@ namespace SmartcomTask.Controllers
         {
             if(User.IsInRole("Admin"))
             {
-                return Json(dataManager.orderElementRepository.GetOrderElements());
-                //return Json(dataManager.orderRepository.GetAllOrders());
+                return Json(dataManager.orderRepository.GetAllOrders());
             }
             else
             {
                 var customer = dataManager.customerRepository.GetCustomerByUserName(User.Identity.Name);
-                var data = dataManager.orderElementRepository.GetOrderElementsBelongsToCustomer(customer.Id).ToList();
-
-                return Json(data);
-                //return Json(dataManager.orderRepository.GetOrdersBelongsToCustomer(customer.Id));
+                return Json(dataManager.orderRepository.GetOrdersBelongsToCustomer(customer.Id));
             }
+        }
+
+        [HttpGet]
+        public JsonResult GetOrderDetails(Guid Id)
+        {
+            return Json(dataManager.orderElementRepository.GetOrderElementsByOrderId(Id));
         }
 
 
 
 
+        [HttpPost]
+        public async Task<JsonResult> DeleteOrder(Guid Id)
+        {
+            dataManager.orderElementRepository.DeleteOrderElement(Id);
+            await dataManager.Commit();
 
+            return Json(new ActionConfirmResult());
+        }
 
 
 

@@ -4,16 +4,16 @@
             <thead>
                 <tr>
                     <th v-if="isAdmin">
-                        Code
+                        Код товара
                     </th>
                     <th>
-                        Name
+                        Наименование
                     </th>
                     <th>
-                        Price
+                        Цена
                     </th>
                     <th>
-                        Category
+                        Категория
                     </th>
                 </tr>
             </thead>
@@ -73,7 +73,7 @@ import Axios from "axios"
                 var base = this;
 
                 var currentItem = base.items.filter(f => { return f.id === id; })[0];
-                var sure = confirm("Do you want to delete item -> " + currentItem.name + " ( " + currentItem.code + " )? ");
+                var sure = confirm("Удалить " + currentItem.name + "?");
 
                 if (sure) {
                     new Promise(function (resolve, reject) {
@@ -92,7 +92,7 @@ import Axios from "axios"
                 var base = this;
 
                 var currentItem = base.items.filter(f => { return f.id === id; })[0];
-                var sure = confirm("Do you want to add item to cart -> " + currentItem.name + "?");
+                var sure = confirm("Добавить " + currentItem.name + " в корзину? ");
 
                 if (sure) {
                     new Promise(function (resolve, reject) {

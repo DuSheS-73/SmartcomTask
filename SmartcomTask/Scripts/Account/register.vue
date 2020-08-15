@@ -1,16 +1,16 @@
 <template>
     <div class="registration">
 
-        <h1>Регистрация</h1>
+        <h1>Р РµРіРёСЃС‚СЂР°С†РёСЏ</h1>
 
         <form>
             <div class="form-group">
-                <label for="Name" class="form-label">Имя</label>
+                <label for="Name" class="form-label">РРјСЏ</label>
                 <input v-model="Name" class="form-input" required />
             </div>
 
             <div class="form-group">
-                <label for="UserName" class="form-label">Логин</label>
+                <label for="UserName" class="form-label">Р›РѕРіРёРЅ</label>
                 <input v-model="UserName" class="form-input" required />
             </div>
 
@@ -20,16 +20,16 @@
             </div>
 
             <div class="form-group">
-                <label for="Password" class="form-label">Пароль</label>
+                <label for="Password" class="form-label">РџР°СЂРѕР»СЊ</label>
                 <input v-model="Password" type="password" class="form-input" required />
             </div>
 
             <div class="form-group">
-                <label for="Address" class="form-label">Адрес</label>
+                <label for="Address" class="form-label">РђРґСЂРµСЃ</label>
                 <input v-model="Address" class="form-input" required />
             </div>
             <div class="form-group">
-                <input type="button" @click="register" value="Зарегистрироваться" class="form-submit-btn" />
+                <input type="button" @click="register" value="Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊСЃСЏ" class="form-submit-btn" />
             </div>
         </form>
     </div>

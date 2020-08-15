@@ -10,8 +10,8 @@ using SmartcomTask.Domain;
 namespace SmartcomTask.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200814154003_Initial")]
-    partial class Initial
+    [Migration("20200815115005_Initial_3")]
+    partial class Initial_3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -105,8 +105,8 @@ namespace SmartcomTask.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("1f654d9a-d001-4ced-9160-7cc487441e8a"),
-                            RoleId = new Guid("838ad23e-7f85-4fa9-bf14-9d5980e6d8fe")
+                            UserId = new Guid("afebc95f-760c-4933-8bb6-578ef39ae993"),
+                            RoleId = new Guid("c35ddc7c-77ee-448d-acca-c1f1c8de1edd")
                         });
                 });
 
@@ -159,15 +159,15 @@ namespace SmartcomTask.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("838ad23e-7f85-4fa9-bf14-9d5980e6d8fe"),
-                            ConcurrencyStamp = "97d5f6ee-008e-450f-b38c-e7316601a238",
+                            Id = new Guid("c35ddc7c-77ee-448d-acca-c1f1c8de1edd"),
+                            ConcurrencyStamp = "e9d0ed04-c6f9-4494-919c-475c94b9ae2e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("c3c31431-1ab5-4fa5-a5d0-692cfc313e71"),
-                            ConcurrencyStamp = "be10791b-879b-43ac-a30e-e43334879924",
+                            Id = new Guid("243fe3fd-3f5a-4f1a-b73c-39a7fee45762"),
+                            ConcurrencyStamp = "722cc924-6622-4443-b085-c2a10054675d",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -248,15 +248,15 @@ namespace SmartcomTask.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1f654d9a-d001-4ced-9160-7cc487441e8a"),
+                            Id = new Guid("afebc95f-760c-4933-8bb6-578ef39ae993"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b1817950-33bf-41b7-9bb4-eada7dba0fd8",
+                            ConcurrencyStamp = "9af8f0ae-78b2-49a7-bccf-1d4e05c3fa27",
                             Email = "admin@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJrl2u7xtV9DN66i8bMX8+gA+zb6Va+Hi+xHyGsWpMbZi2KTz4gnUQbQTeBahZK0Ww==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKyYM+grlOKDVVzkTYqOCvoHRA+uFqi+oiiDLHC40Q6Kqu5M5hOgGuAk+5Hma18PPg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -377,7 +377,7 @@ namespace SmartcomTask.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("ItemID")
+                    b.Property<Guid>("ItemID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ShoppingCartID")
@@ -477,7 +477,9 @@ namespace SmartcomTask.Migrations
                 {
                     b.HasOne("SmartcomTask.Models.Item", "Item")
                         .WithMany()
-                        .HasForeignKey("ItemID");
+                        .HasForeignKey("ItemID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

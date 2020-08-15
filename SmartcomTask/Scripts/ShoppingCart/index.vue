@@ -4,13 +4,13 @@
             <thead>
                 <tr>
                     <th>
-                        Name
+                        РўРѕРІР°СЂ
                     </th>
                     <th>
-                        Price
+                        Р¦РµРЅР° Р·Р° РµРґРёРЅРёС†Сѓ
                     </th>
                     <th>
-                        Amount
+                        РљРѕР»РёС‡РµСЃС‚РІРѕ
                     </th>
                 </tr>
             </thead>
@@ -26,7 +26,7 @@
                         {{ i.amount }}
                     </td>
                     <td>
-                        <a @click="removeFromCart(i.item)">Убрать</a>
+                        <a @click="removeFromCart(i.item)">РЈР±СЂР°С‚СЊ</a>
                     </td>
                 </tr>
             </tbody>
@@ -67,7 +67,7 @@ import Axios from "axios"
             removeFromCart(item) {
                 var base = this;
 
-                var sure = confirm("Убрать из корзины " + item.name + "?");
+                var sure = confirm("РЈР±СЂР°С‚СЊ РёР· РєРѕСЂР·РёРЅС‹ " + item.name + "?");
                 if (sure) {
                     new Promise(function (resolve, reject) {
                         Axios
@@ -87,7 +87,7 @@ import Axios from "axios"
                 var base = this;
                 var cartItems = this.cart.shoppingCart.shoppingCartItems;
 
-                var sure = confirm("Сделать заказ?");
+                var sure = confirm("РћС„РѕСЂРјРёС‚СЊ Р·Р°РєР°Р·?");
                 if (sure) {
                     new Promise(function (resolve, reject) {
                         Axios

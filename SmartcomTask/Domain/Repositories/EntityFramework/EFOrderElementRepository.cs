@@ -21,11 +21,9 @@ namespace SmartcomTask.Domain.Repositories.EntityFramework
             return context.OrdersElements;
         }
 
-        public IQueryable<OrderElement> GetOrderElementsBelongsToCustomer(Guid customerId)
+        public IQueryable<OrderElement> GetOrderElementsByOrderId(Guid orderId)
         {
-            //var orders = context.Orders.Where(c => c.CustomerId == customerId);
-            return context.OrdersElements.Where(c => c.Order.CustomerId == customerId).OrderBy(o => o.Order.Status);
-            //throw new NotImplementedException();
+            return context.OrdersElements.Where(c => c.Order.Id == orderId).OrderBy(o => o.Order.Status);
         }
 
         public OrderElement GetOrderElementById(Guid Id)

@@ -21,7 +21,7 @@ namespace SmartcomTask.Domain
         {
             base.OnModelCreating(builder);
 
-            // ApplicationUser - Customer
+            // ForeignKeys definition
             builder.Entity<Customer>()
                 .HasOne(c => c.ApplicationUser)
                 .WithOne(k => k.Customer)
@@ -34,9 +34,15 @@ namespace SmartcomTask.Domain
                 .HasForeignKey(k => k.CustomerId);
 
             //builder.Entity<OrderElement>()
-            //    .HasOne<Order>()
+            //    .HasOne(i => i.Item)
             //    .WithOne()
-            //    .HasForeignKey<OrderElement>(k => k.OrderId)
+            //    .HasForeignKey<OrderElement>(k => k.ItemID)
+            //    .OnDelete(DeleteBehavior.Restrict);
+
+            //builder.Entity<ShoppingCartItem>()
+            //    .HasOne(i => i.Item)
+            //    .WithOne()
+            //    .HasForeignKey<ShoppingCartItem>(k => k.ItemID)
             //    .OnDelete(DeleteBehavior.Cascade);
 
             // To create dependency

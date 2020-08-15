@@ -4,29 +4,80 @@
             <thead>
                 <tr>
                     <th>
-                        Shipment date
+                        Товар
                     </th>
                     <th>
-                        Number
+                        Цена за единицу
                     </th>
                     <th>
-                        Status
+                        Количество
+                    </th>
+                    <th>
+                        Дата заказа
+                    </th>
+                    <th>
+                        Номер заказа
+                    </th>
+                    <th>
+                        Дата доставки
+                    </th>
+                    <th>
+                        Состояние заказа
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in orders">
+                <tr v-for="order in orders">
                     <td>
-                        {{ item.item.name }}
+                        {{ order.orderNumber }}
                     </td>
                     <td>
-                        
+                        {{ order.orderDate }}
                     </td>
                     <td>
-                        
+                        {{ order.shipmentDate }}
                     </td>
                     <td>
+                        {{ order.status }}
+                    </td>
+                    <td>
+                        <input type="button" @click="orderDetails(order.id)" value="Подробнее" />
+                        <a v-if="isAdmin || order.status === 'New'" @click="deleteOrder(order)">Отменить заказ</a>
+                    </td>
 
+                </tr>
+                <tr v-for="order in orders">
+                    <td>
+                        <div id="details">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Товар
+                                        </th>
+                                        <th>
+                                            Цена за единицу
+                                        </th>
+                                        <th>
+                                            Количество
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="element in details">
+                                        <td>
+                                            {{ element.item.name }}
+                                        </td>
+                                        <td>
+                                            {{ element.itemPrice }}
+                                        </td>
+                                        <td>
+                                            {{ element.itemsCount }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -46,17 +97,54 @@ import Axios from "axios"
 
     export default {
         props: {
-            OrdersDataUrl: String
+            isAdmin: Boolean,
+            OrdersDataUrl: String,
+            OrderDetailsUrl: String,
+            DeleteUrl: String
         },
 
         data() {
             return {
-               orders: []
+                orders: [],
+                details: []
             }
         },
 
         methods: {
-           
+            orderDetails(id) {
+                var base = this;
+
+                new Promise(function (resolve, reject) {
+                    Axios
+                        .get(base.OrderDetailsUrl + '/' + id)
+                        .then(response => {
+                            console.log(response);
+                            base.details = response.data;
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                });
+            },
+
+            deleteOrder(order) {
+                var base = this;
+
+                var sure = confirm("Отменить заказ " + order.order.orderNumber + "?");
+                if (sure) {
+                    new Promise(function (resolve, reject) {
+                        Axios
+                            .post(base.DeleteUrl + '/' + order.id)
+                            .then(response => {
+                                console.log(response);
+                                window.location.reload();
+                            })
+                            .catch(error => {
+                                console.log(error);
+                            });
+                    });
+                }
+            }
         },
 
         mounted() {

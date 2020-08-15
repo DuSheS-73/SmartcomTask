@@ -11,7 +11,6 @@ namespace SmartcomTask.Models
     public class Customer
     {
         [Required]
-        //[ForeignKey("CustomerID")]
         public Guid Id { get; set; }
 
         [Required]
@@ -30,7 +29,5 @@ namespace SmartcomTask.Models
 
 
         public virtual ApplicationUser ApplicationUser { get; set; }
-
-        //public List<Order> Orders { get; set; }
     }
 }
