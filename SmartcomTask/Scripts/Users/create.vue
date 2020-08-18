@@ -1,7 +1,6 @@
 <template>
-    <div class="registration">
-
-        <h1>Регистрация</h1>
+    <div class="create">
+        <h1>Создать нового пользователя</h1>
 
         <form>
             <div class="form-group">
@@ -29,9 +28,10 @@
                 <input v-model="Address" class="form-input" required />
             </div>
             <div class="form-group">
-                <input type="button" @click="register" value="Зарегистрироваться" class="form-submit-btn" />
+                <input type="button" @click="save" value="Создать" class="form-submit-btn" />
             </div>
         </form>
+    </div>
     </div>
 </template>
 
@@ -40,7 +40,7 @@ import Axios from "axios";
 
     export default {
         props: {
-            RegisterUrl: String,
+            CreateUrl: String,
             IndexUrl: String
         },
         data() {
@@ -54,8 +54,9 @@ import Axios from "axios";
                 errors: []
             }
         },
+
         methods: {
-            register() {
+            save() {
                 var base = this;
 
                 var data = {
@@ -63,27 +64,23 @@ import Axios from "axios";
                     userName: base.UserName,
                     email: base.Email,
                     password: base.Password,
-                    address: base.Address,
-                    Discount: 0
-                };
-
+                    address: base.Address
+                }
+                
                 new Promise(function (resolve, reject) {
                     Axios
-                        .post(base.RegisterUrl, data)
-                        .then(response => {
-                            console.log(response);
-
-                            if (response.data.success) {
+                        .post(base.CreateUrl, data)
+                        .then(res => {
+                            if (res.data.success) {
                                 window.location.href = base.IndexUrl;
                             }
                             else {
-                                base.errors = response.data;
-                            }   
+                                base.errors = res.data;
+                            }
                         })
                         .catch(error => { console.log(error); });
                 });
-                
             }
-        } 
+        }
     };
 </script>

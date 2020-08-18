@@ -3,6 +3,21 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200816183002_Initial.cs" />
+    <Compile Remove="Migrations\20200816183002_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200816183114_Initial.cs" />
+    <Compile Remove="Migrations\20200816183114_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200816183635_Initial.cs" />
+    <Compile Remove="Migrations\20200816183635_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200816183754_Initial.cs" />
+    <Compile Remove="Migrations\20200816183754_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200816183939_Initial.cs" />
+    <Compile Remove="Migrations\20200816183939_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200816184051_Initial.cs" />
+    <Compile Remove="Migrations\20200816184051_Initial.Designer.cs" />
+  </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Home\" />
     <Folder Include="wwwroot\images\" />

@@ -2,7 +2,7 @@
 
 namespace SmartcomTask.ViewModels
 {
-    public class RegisterViewModel
+    public class UserInfoViewModel
     {
         [Required]
         [Display(Name = "Имя")]
@@ -20,8 +20,10 @@ namespace SmartcomTask.ViewModels
         [Display(Name = "Пароль")]
         public string Password { get; set; }
 
-        [Required]
         [Display(Name = "Адрес")]
         public string Address { get; set; }
+
+        [Display(Name = "Скидка")]
+        public int Discount { get; set; }
     }
 }

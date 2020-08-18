@@ -9,7 +9,7 @@ module.exports = {
         account: './Scripts/Account/index.js',
         home: './Scripts/Home/index.js',
         items: './Scripts/Items/index.js',
-        customers: './Scripts/Customers/index.js',
+        users: './Scripts/Users/index.js',
         cart: './Scripts/ShoppingCart/index.js',
         orders: './Scripts/Orders/index.js'
     },

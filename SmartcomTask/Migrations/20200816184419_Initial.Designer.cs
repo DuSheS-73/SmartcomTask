@@ -10,8 +10,8 @@ using SmartcomTask.Domain;
 namespace SmartcomTask.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200815115005_Initial_3")]
-    partial class Initial_3
+    [Migration("20200816184419_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -105,8 +105,8 @@ namespace SmartcomTask.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("afebc95f-760c-4933-8bb6-578ef39ae993"),
-                            RoleId = new Guid("c35ddc7c-77ee-448d-acca-c1f1c8de1edd")
+                            UserId = new Guid("9452bad3-bb0c-4b32-985c-6689d30ea3b2"),
+                            RoleId = new Guid("537afc0b-e60b-4691-9ff3-5184694d4aa1")
                         });
                 });
 
@@ -159,15 +159,15 @@ namespace SmartcomTask.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c35ddc7c-77ee-448d-acca-c1f1c8de1edd"),
-                            ConcurrencyStamp = "e9d0ed04-c6f9-4494-919c-475c94b9ae2e",
+                            Id = new Guid("537afc0b-e60b-4691-9ff3-5184694d4aa1"),
+                            ConcurrencyStamp = "aa81cb5e-fefe-4c71-a007-64514747c5c0",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("243fe3fd-3f5a-4f1a-b73c-39a7fee45762"),
-                            ConcurrencyStamp = "722cc924-6622-4443-b085-c2a10054675d",
+                            Id = new Guid("2d06effa-6272-4259-8688-c9cba809fae4"),
+                            ConcurrencyStamp = "fab19818-ff39-46ca-bcc1-64096c4aa15c",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -185,9 +185,6 @@ namespace SmartcomTask.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
@@ -231,10 +228,6 @@ namespace SmartcomTask.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId")
-                        .IsUnique()
-                        .HasFilter("[CustomerId] IS NOT NULL");
-
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -248,15 +241,15 @@ namespace SmartcomTask.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("afebc95f-760c-4933-8bb6-578ef39ae993"),
+                            Id = new Guid("9452bad3-bb0c-4b32-985c-6689d30ea3b2"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9af8f0ae-78b2-49a7-bccf-1d4e05c3fa27",
+                            ConcurrencyStamp = "42b9b198-797b-49eb-89fa-00238bb7c2d1",
                             Email = "admin@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKyYM+grlOKDVVzkTYqOCvoHRA+uFqi+oiiDLHC40Q6Kqu5M5hOgGuAk+5Hma18PPg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBhe3M4I8/ZkHSCM7mYyPv+Y3WcJhm6q95l8QTZyHMQ48sz2wFtH1Nf9pGP5mYRPBw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -267,7 +260,6 @@ namespace SmartcomTask.Migrations
             modelBuilder.Entity("SmartcomTask.Models.Customer", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
@@ -441,12 +433,13 @@ namespace SmartcomTask.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SmartcomTask.Models.ApplicationUser", b =>
+            modelBuilder.Entity("SmartcomTask.Models.Customer", b =>
                 {
-                    b.HasOne("SmartcomTask.Models.Customer", "Customer")
-                        .WithOne("ApplicationUser")
-                        .HasForeignKey("SmartcomTask.Models.ApplicationUser", "CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("SmartcomTask.Models.ApplicationUser", null)
+                        .WithOne("Customer")
+                        .HasForeignKey("SmartcomTask.Models.Customer", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SmartcomTask.Models.Order", b =>

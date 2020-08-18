@@ -130,7 +130,7 @@ import Axios from "axios"
             deleteOrder(order) {
                 var base = this;
 
-                var sure = confirm("Отменить заказ " + order.order.orderNumber + "?");
+                var sure = confirm("Отменить заказ " + order.orderNumber + "?");
                 if (sure) {
                     new Promise(function (resolve, reject) {
                         Axios

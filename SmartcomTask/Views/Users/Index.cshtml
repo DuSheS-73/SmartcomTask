@@ -1,0 +1,15 @@
+﻿@{ 
+    var isAdmin = User.IsInRole("Admin");
+}
+
+<div id="app">
+    <index-component :is-admin="@isAdmin.ToString().ToLower()" 
+                     users-url="@Url.Action("UsersData", "Users")"
+                     edit-url="@Url.Action("Edit", "Users")" 
+                     create-url="@Url.Action("Create", "Users")" 
+                     delete-url="@Url.Action("Delete", "Users")"></index-component>
+</div>
+
+@section scripts{ 
+    <script src="~/js/users.js" asp-append-version="true"></script>
+}

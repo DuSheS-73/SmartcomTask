@@ -23,10 +23,11 @@ namespace SmartcomTask.Domain
 
             // ForeignKeys definition
             builder.Entity<Customer>()
-                .HasOne(c => c.ApplicationUser)
-                .WithOne(k => k.Customer)
-                .HasForeignKey<ApplicationUser>(k => k.CustomerId)
+                .HasOne<ApplicationUser>()
+                .WithOne(c => c.Customer)
+                .HasForeignKey<Customer>(k => k.Id)
                 .OnDelete(DeleteBehavior.Cascade);
+
 
             builder.Entity<Order>()
                 .HasOne<Customer>()

@@ -1,0 +1,12 @@
+﻿@{
+
+}
+
+<div id="app">
+    <edit-component edit-url="@Url.Action("Edit", "Users", new { Id = ViewBag.Id })" 
+                    details-url="@Url.Action("UserDetails", "Users", new { Id = ViewBag.Id })"></edit-component>
+</div>
+
+@section scripts{
+    <script src="~/js/users.js" asp-append-version="true"></script>
+}

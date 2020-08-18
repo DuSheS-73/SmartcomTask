@@ -3,9 +3,11 @@
 }
 
 <div id="app">
-    <index-component cart-url="@Url.Action("GetCart", "ShoppingCart")"
+    <index-component catalog-url="@Url.Action("Index", "Items")"
+                     cart-url="@Url.Action("GetCart", "ShoppingCart")"
                      remove-url="@Url.Action("RemoveFromCart", "ShoppingCart")"
-                     order-url="@Url.Action("MakeOrder", "Orders")"
+                     order-url="@Url.Action("ConfirmOrder", "ShoppingCart")"
+                     clear-url="@Url.Action("ClearAll", "ShoppingCart")"
                      index-url="@Url.Action("Index", "Home")"></index-component>
 </div>
 

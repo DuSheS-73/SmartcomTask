@@ -62,6 +62,7 @@ namespace SmartcomTask.Controllers
         }
 
 
+
         [HttpPost]
         public async Task<JsonResult> RemoveFromCart([FromBody]Item item)
         {
@@ -70,6 +71,53 @@ namespace SmartcomTask.Controllers
                 shoppingCart.RemoveFromCart(item);
                 await dataManager.Commit();
 
+                return Json(new ActionConfirmResult());
+            }
+            return Json(new ActionConfirmResult { Errors = ModelState.SelectMany(s => s.Value.Errors.Select(e => e.ErrorMessage)).ToList() });
+        }
+
+
+        [HttpPost]
+        public async Task<JsonResult> ClearAll()
+        {
+            shoppingCart.ClearCart();
+            await dataManager.Commit();
+
+            return Json(new ActionConfirmResult());
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmOrder([FromBody] List<ShoppingCartItem> shoppingCart)
+        {
+            if (ModelState.IsValid)
+            {
+                var customer = dataManager.customerRepository.GetCustomerByUserName(User.Identity.Name);
+
+                Order order = new Order()
+                {
+                    CustomerId = customer.Id,
+                    OrderNumber = new Random().Next(),
+                    Status = "New"
+                };
+                dataManager.orderRepository.SaveOrder(order);
+
+                foreach (var item in shoppingCart)
+                {
+                    OrderElement element = new OrderElement
+                    {
+                        Order = order,
+                        Item = item.Item,
+                        ItemsCount = item.Amount,
+                        ItemPrice = item.Item.Price
+                    };
+                    dataManager.orderElementRepository.SaveOrderElement(element);
+                }
+
+                await dataManager.Commit();
+
+                await ClearAll();
                 return Json(new ActionConfirmResult());
             }
             return Json(new ActionConfirmResult { Errors = ModelState.SelectMany(s => s.Value.Errors.Select(e => e.ErrorMessage)).ToList() });

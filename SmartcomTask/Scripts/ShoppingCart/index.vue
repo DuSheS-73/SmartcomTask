@@ -1,5 +1,5 @@
 <template>
-    <div id="cart">
+    <div id="cart" v-if="cart.shoppingCart.shoppingCartItems.length > 0">
         <table class="table">
             <thead>
                 <tr>
@@ -32,12 +32,16 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td>
-                        <a @click="makeOrder">Buy</a>
+                    <td v-if="">
+                        <a @click="clearCart">Отчистить корзину</a>
+                        <a @click="makeOrder">Перейти к оплате</a>
                     </td>
                 </tr>
             </tfoot>
         </table>
+    </div>
+    <div v-else id="cart-empty">
+        <h2>Корзина пуста. Загляните в <a :href="CatalogUrl">каталог товаров</a></h2>
     </div>
 </template>
 
@@ -46,9 +50,11 @@ import Axios from "axios"
 
     export default {
         props: {
+            CatalogUrl: String,
             CartUrl: String,
             RemoveUrl: String,
             OrderUrl: String,
+            ClearUrl: String,
             IndexUrl: String
         },
 
@@ -83,6 +89,25 @@ import Axios from "axios"
                 }
             },
 
+            clearCart() {
+                var base = this;
+
+                var sure = confirm("Желаете отчистить корзину?");
+                if (sure) {
+                    new Promise(function (resolve, reject) {
+                        Axios
+                            .post(base.ClearUrl)
+                            .then(response => {
+                                console.log(response);
+                                window.location.reload();
+                            })
+                            .catch(error => {
+                                console.log(error);
+                            });
+                    });
+                }
+            },
+
             makeOrder() {
                 var base = this;
                 var cartItems = this.cart.shoppingCart.shoppingCartItems;
@@ -94,6 +119,7 @@ import Axios from "axios"
                             .post(base.OrderUrl, cartItems)
                             .then(response => {
                                 console.log(response);
+                                alert("Заказ успешно создан!");
                                 window.location.href = base.IndexUrl;
                             })
                             .catch(error => {

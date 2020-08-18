@@ -22,18 +22,28 @@ namespace SmartcomTask.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Customers",
+                name: "AspNetUsers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
-                    Code = table.Column<string>(nullable: false),
-                    Address = table.Column<string>(nullable: true),
-                    Discount = table.Column<int>(nullable: false)
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -69,80 +79,6 @@ namespace SmartcomTask.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    CustomerId = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    CustomerId = table.Column<Guid>(nullable: false),
-                    OrderDate = table.Column<DateTime>(nullable: false),
-                    ShipmentDate = table.Column<DateTime>(nullable: true),
-                    OrderNumber = table.Column<int>(nullable: false),
-                    Status = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Orders_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ShoppingCartItems",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(nullable: false),
-                    ItemID = table.Column<Guid>(nullable: false),
-                    Amount = table.Column<int>(nullable: false),
-                    ShoppingCartID = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ShoppingCartItems", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_ShoppingCartItems_Items_ItemID",
-                        column: x => x.ItemID,
-                        principalTable: "Items",
-                        principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -232,6 +168,69 @@ namespace SmartcomTask.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Customers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Code = table.Column<string>(nullable: false),
+                    Address = table.Column<string>(nullable: true),
+                    Discount = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Customers_AspNetUsers_Id",
+                        column: x => x.Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShoppingCartItems",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(nullable: false),
+                    ItemID = table.Column<Guid>(nullable: false),
+                    Amount = table.Column<int>(nullable: false),
+                    ShoppingCartID = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCartItems", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCartItems_Items_ItemID",
+                        column: x => x.ItemID,
+                        principalTable: "Items",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CustomerId = table.Column<Guid>(nullable: false),
+                    OrderDate = table.Column<DateTime>(nullable: false),
+                    ShipmentDate = table.Column<DateTime>(nullable: true),
+                    OrderNumber = table.Column<int>(nullable: false),
+                    Status = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrdersElements",
                 columns: table => new
                 {
@@ -249,7 +248,7 @@ namespace SmartcomTask.Migrations
                         column: x => x.ItemID,
                         principalTable: "Items",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrdersElements_Orders_OrderId",
                         column: x => x.OrderId,
@@ -261,22 +260,22 @@ namespace SmartcomTask.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("b74b9078-4ec8-441c-9ed0-d62d3800012f"), "189067c7-265e-44c2-b03d-36c0172997d2", "Admin", "ADMIN" });
+                values: new object[] { new Guid("537afc0b-e60b-4691-9ff3-5184694d4aa1"), "aa81cb5e-fefe-4c71-a007-64514747c5c0", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("9fe757fa-927f-46fc-8c05-379490553cd1"), "632be5ac-7969-447a-ad96-3afc29e585ae", "User", "USER" });
+                values: new object[] { new Guid("2d06effa-6272-4259-8688-c9cba809fae4"), "fab19818-ff39-46ca-bcc1-64096c4aa15c", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CustomerId", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("71280e47-ca39-477f-9a82-c7e2fc2c6186"), 0, "76776a7d-c18a-486b-9b3a-79d6d56f1954", null, "admin@email.com", true, false, null, "ADMIN@EMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEFXAzczDeT5sjQtZ8NuvznLGyR4ZsDvjucD4IP3QFHSu9eIVN8YFF+ZSHdqBIhyYhA==", null, false, "", false, "Admin" });
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { new Guid("9452bad3-bb0c-4b32-985c-6689d30ea3b2"), 0, "42b9b198-797b-49eb-89fa-00238bb7c2d1", "admin@email.com", true, false, null, "ADMIN@EMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEBhe3M4I8/ZkHSCM7mYyPv+Y3WcJhm6q95l8QTZyHMQ48sz2wFtH1Nf9pGP5mYRPBw==", null, false, "", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { new Guid("71280e47-ca39-477f-9a82-c7e2fc2c6186"), new Guid("b74b9078-4ec8-441c-9ed0-d62d3800012f") });
+                values: new object[] { new Guid("9452bad3-bb0c-4b32-985c-6689d30ea3b2"), new Guid("537afc0b-e60b-4691-9ff3-5184694d4aa1") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -306,13 +305,6 @@ namespace SmartcomTask.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_CustomerId",
-                table: "AspNetUsers",
-                column: "CustomerId",
-                unique: true,
-                filter: "[CustomerId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -332,8 +324,7 @@ namespace SmartcomTask.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_OrdersElements_ItemID",
                 table: "OrdersElements",
-                column: "ItemID",
-                unique: true);
+                column: "ItemID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrdersElements_OrderId",
@@ -343,8 +334,7 @@ namespace SmartcomTask.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCartItems_ItemID",
                 table: "ShoppingCartItems",
-                column: "ItemID",
-                unique: true);
+                column: "ItemID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -374,9 +364,6 @@ namespace SmartcomTask.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
@@ -384,6 +371,9 @@ namespace SmartcomTask.Migrations
 
             migrationBuilder.DropTable(
                 name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

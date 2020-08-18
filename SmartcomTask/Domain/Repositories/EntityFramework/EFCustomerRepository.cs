@@ -31,7 +31,7 @@ namespace SmartcomTask.Domain.Repositories.EntityFramework
             if (UserName != null)
             {
                 var appUser = context.Users.FirstOrDefault(c => c.UserName == UserName);
-                return GetCustomerById(appUser.CustomerId);
+                return GetCustomerById(appUser.Customer.Id);
             }
             return null;
         }

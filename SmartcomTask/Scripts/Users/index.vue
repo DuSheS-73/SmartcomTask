@@ -4,36 +4,48 @@
             <thead>
                 <tr>
                     <th>
-                        Name
+                        Логин
                     </th>
                     <th>
-                        Code
+                        Имя
                     </th>
                     <th>
-                        Address
+                        Email
                     </th>
                     <th>
-                        Discount
+                        Код
+                    </th>
+                    <th>
+                        Адрес
+                    </th>
+                    <th>
+                        Скидка
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in customers">
+                <tr v-for="user in users">
                     <td>
-                        {{ item.name }}
+                        {{ user.userName }}
                     </td>
                     <td>
-                        {{ item.code }}
+                        {{ user.customer.name }}
                     </td>
                     <td>
-                        {{ item.address }}
+                        {{ user.email }}
                     </td>
                     <td>
-                        {{ item.discount }}
+                        {{ user.customer.code }}
                     </td>
                     <td>
-                        <a :href="EditUrl + '/' + item.id">Edit</a>
-                        <a href="javascript:window.location.reload();" v-on:click="deleteItem(item.id)">Delete</a>
+                        {{ user.customer.address }}
+                    </td>
+                    <td>
+                        {{ user.customer.discount }}
+                    </td>
+                    <td>
+                        <a :href="EditUrl + '/' + user.id">Edit</a>
+                        <a @click="deleteUser(user.id)">Delete</a>
                     </td>
                 </tr>
             </tbody>
@@ -54,30 +66,33 @@ import Axios from "axios"
     export default {
         props: {
             isAdmin: Boolean,
-            CustomersUrl: String,
+            UsersUrl: String,
             EditUrl: String,
             CreateUrl: String,
             DeleteUrl: String
         },
         data() {
             return {
-                customers: [],
+                users: [],
             }
         },
 
 
         methods: {
-            deleteItem(id) {
+            deleteUser(id) {
                 var base = this;
 
-                var currentItem = base.customers.filter(f => { return f.id === id; })[0];
-                var sure = confirm("Do you want to delete item -> " + currentItem.name + "?");
+                var currentUser = base.users.filter(f => { return f.id === id; })[0];
+                var sure = confirm("Do you want to delete item -> " + currentUser.userName + "?");
 
                 if (sure) {
                     new Promise(function (resolve, reject) {
                         Axios
-                            .post(base.DeleteUrl + '/' + currentItem.id)
-                            .then(res => res)
+                            .post(base.DeleteUrl + '/' + currentUser.id)
+                            .then(res => {
+                                console.log(res);
+                                window.location.reload();
+                            })
                             .catch(error => { console.log(error); });
                     });
                 }
@@ -89,10 +104,10 @@ import Axios from "axios"
 
             new Promise(function (resolve, reject) {
                 Axios
-                    .get(base.CustomersUrl)
+                    .get(base.UsersUrl)
                     .then(response => {
                         console.log(response);
-                        base.customers = response.data;
+                        base.users = response.data;
                     })
                     .catch(error => {
                         console.log(error);

@@ -1,0 +1,12 @@
+﻿@{
+
+}
+
+<div id="app">
+    <create-component create-url="@Url.Action("Registration", "Account")" 
+                      index-url="@Url.Action("Index", "Users")"></create-component>
+</div>
+
+@section scripts{
+    <script src="~/js/users.js" asp-append-version="true"></script>
+ }

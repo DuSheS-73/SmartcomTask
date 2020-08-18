@@ -32,7 +32,7 @@
                         {{ item.category }}
                     </td>
                     <td>
-                        <a @click="addToCart(item.id)">Add to cart</a>
+                        <a @click="addToCart(item.id)">Добавить в корзину</a>
                         <a v-if="isAdmin" :href="EditUrl + '/' + item.id">Edit</a>
                         <a v-if="isAdmin" @click="deleteItem(item.id)">Delete</a>
                     </td>
@@ -98,7 +98,9 @@ import Axios from "axios"
                     new Promise(function (resolve, reject) {
                         Axios
                             .post(base.AddToCartUrl, currentItem)
-                            .then(res => res)
+                            .then(res => {
+                                console.log(res);
+                            })
                             .catch(error => { console.log(error); });
                     });
                 }

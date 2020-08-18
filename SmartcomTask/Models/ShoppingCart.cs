@@ -39,13 +39,13 @@ namespace SmartcomTask.Models
 
         public void AddToCart(Item item, int amount)
         {
-            var shoppingCartItem = context.ShoppingCartItems.FirstOrDefault(c => c.Item.ID == item.ID && c.ShoppingCartID == ID);
+            var shoppingCartItem = context.ShoppingCartItems.FirstOrDefault(c => c.Item.ID == item.ID && c.ShoppingCartID == this.ID);
 
             if (shoppingCartItem == null)
             {
                 shoppingCartItem = new ShoppingCartItem
                 {
-                    ShoppingCartID = ID,
+                    ShoppingCartID = this.ID,
                     Item = item,
                     Amount = amount
                 };
@@ -62,9 +62,6 @@ namespace SmartcomTask.Models
         public int RemoveFromCart(Item item)
         {
             var shoppingCartItem = context.ShoppingCartItems.FirstOrDefault(c => c.Item.ID == item.ID && c.ShoppingCartID == this.ID);
-
-            //int localAmount = 0;
-
             if(shoppingCartItem != null)
             {
                 if(shoppingCartItem.Amount > 1)
@@ -76,7 +73,6 @@ namespace SmartcomTask.Models
                     context.ShoppingCartItems.Remove(shoppingCartItem);
                 }
             }
-
             return shoppingCartItem.Amount;
         }
 
@@ -94,7 +90,6 @@ namespace SmartcomTask.Models
             var cartItems = context.ShoppingCartItems.Where(c => c.ShoppingCartID == this.ID);
 
             context.ShoppingCartItems.RemoveRange(cartItems);
-            context.SaveChanges();
         }
 
 
