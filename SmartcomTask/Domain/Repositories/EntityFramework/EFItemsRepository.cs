@@ -20,6 +20,11 @@ namespace SmartcomTask.Domain.Repositories.EntityFramework
         {
             return context.Items;
         }
+
+        public IQueryable<Item> GetItemsByCategory(string category)
+        {
+            return context.Items.Where(c => c.Category == category);
+        }
         
         public Item GetItemByCode(string code)
         {
@@ -41,7 +46,6 @@ namespace SmartcomTask.Domain.Repositories.EntityFramework
             {
                 context.Entry(entity).State = EntityState.Modified;
             }
-            context.SaveChanges();
         }
 
         public void DeleteItem(Guid Id)

@@ -1,9 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "New Item";
 }
 
 <div id="app">
-    <create-component create-url="@Url.Action("Create")" index-url="@Url.Action("Index", "Home")"></create-component>
+    <create-component create-url="@Url.Action("Create", "Items")" 
+                      index-url="@Url.Action("Index", "Items")"></create-component>
 </div>
 
 @section scripts{

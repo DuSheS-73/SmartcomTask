@@ -9,6 +9,7 @@ namespace SmartcomTask.Domain.Repositories.Abstract
     public interface IItemsRepository
     {
         IQueryable<Item> GetItems();
+        IQueryable<Item> GetItemsByCategory(string category);
         Item GetItemById(Guid? Id);
         Item GetItemByCode(string code);
         void SaveItem(Item entity);

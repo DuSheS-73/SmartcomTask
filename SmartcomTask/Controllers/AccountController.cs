@@ -38,7 +38,7 @@ namespace SmartcomTask.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel loginModel)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel loginModel)
         {
             if (ModelState.IsValid)
             {
@@ -49,13 +49,12 @@ namespace SmartcomTask.Controllers
                     Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user, loginModel.Password, loginModel.RememberMe, false);
                     if(result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Home");
-                        //return Redirect(returnUrl ?? "/");
+                        return Json(new ActionConfirmResult());
                     }
                 }
                 ModelState.AddModelError(nameof(LoginViewModel.UserName), "Неверный логин или пароль");
             }
-            return View(loginModel);
+            return Json(new ActionConfirmResult { Errors = ModelState.SelectMany(s => s.Value.Errors.Select(e => e.ErrorMessage)).ToList() });
         }
 
         #endregion

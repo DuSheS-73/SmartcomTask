@@ -1,25 +1,67 @@
 <template>
-    <div class="login">
-        <form :action="LoginUrl" method="post">
+    <div class="form__block">
+        <h1>Авторизация</h1>
+
+        <form class="form-submit">
             <div class="form-group">
-                <label for="Username" class="form-label">Логин</label>
-                <input name="Username" class="form-input" required/>
+                <input v-model="userName" placeholder="Логин" />
             </div>
             <div class="form-group">
-                <label for="Password" class="form-label">Пароль</label>
-                <input name="Password" type="password" class="form-input" required/>
+                <input v-model="password" type="password" placeholder="Пароль" />
             </div>
-            <div class="form-group">                
-                <input type="submit" value="Войти" class="form-submit-btn" />
+            <div class="form-group">
+                <label for="rememberMe" class="form-label">Запомнить пароль?</label>
+                <input v-model="rememberMe" type="checkbox" class="form-checkbox"/>
             </div>
+            <a @click="login" class="btn red">Войти</a>
+
         </form>
     </div>
 </template>
 
 <script>
+import Axios from "axios";
+
     export default {
         props: {
-            LoginUrl: String
+            LoginUrl: String,
+            IndexUrl: String
+        },
+
+        data() {
+            return {
+                userName: '',
+                password: '',
+                rememberMe: false,
+
+                errors: []
+            }
+        },
+
+        methods: {
+            login() {
+                var base = this;
+
+                var data = {
+                    UserName: base.userName,
+                    Password: base.password,
+                    RememberMe: base.rememberMe
+                }
+
+                new Promise(function (resolve, reject) {
+                    Axios
+                        .post(base.LoginUrl, data)
+                        .then(response => {
+                            if (response.data.success) {
+                                window.location.href = base.IndexUrl;
+                            }
+                            else {
+                                base.errors = response.data;
+                            }
+                        })
+                        .catch(error => { console.log(error); });
+                });
+            }
         }
     };
 </script>

@@ -114,7 +114,7 @@ namespace SmartcomTask.Controllers
                 CurrentUser.Customer.Discount = model.Discount;
 
 
-                var result = await userManager.UpdateAsync(CurrentUser);
+                await userManager.UpdateAsync(CurrentUser);
                 //try
                 //{
                 //    dataManager.userRepository.SaveUser(CurrentUser);

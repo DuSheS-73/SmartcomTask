@@ -1,10 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Edit Item";
 }
 
 <div id="app">
     <edit-component edit-url="@Url.Action("Edit", "Items", new { Id = ViewBag.Id })"
-                    details-url="@Url.Action("ItemDetails", "Items", new { Id = ViewBag.Id })"></edit-component>
+                    details-url="@Url.Action("ItemDetails", "Items", new { Id = ViewBag.Id })"
+                    index-url="@Url.Action("Index", "Items")"></edit-component>
 </div>
 
 @section scripts{

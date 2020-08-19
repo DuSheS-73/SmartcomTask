@@ -104,8 +104,7 @@ namespace SmartcomTask.Controllers
         {
             if(Id != item.ID)
             {
-                // set to NotFound page
-                return RedirectToAction("Index", "Error");
+                return Json(new ActionConfirmResult() { Errors = new List<string>() { "Товар не найден" } });
             }
 
             if(ModelState.IsValid)

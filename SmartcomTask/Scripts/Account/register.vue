@@ -1,36 +1,28 @@
 <template>
-    <div class="registration">
+    <div class="form__block">
 
         <h1>Регистрация</h1>
-
-        <form>
+        <form class="form-submit">
             <div class="form-group">
-                <label for="Name" class="form-label">Имя</label>
-                <input v-model="Name" class="form-input" required />
+                <input v-model="Name" placeholder="Имя"/>
             </div>
 
             <div class="form-group">
-                <label for="UserName" class="form-label">Логин</label>
-                <input v-model="UserName" class="form-input" required />
+                <input v-model="UserName" placeholder="Логин"/>
             </div>
 
             <div class="form-group">
-                <label for="Email" class="form-label">Email</label>
-                <input v-model="Email" class="form-input" required />
+                <input v-model="Email" placeholder="Email"/>
             </div>
 
             <div class="form-group">
-                <label for="Password" class="form-label">Пароль</label>
-                <input v-model="Password" type="password" class="form-input" required />
+                <input v-model="Password" type="password" placeholder="Пароль"/>
             </div>
 
             <div class="form-group">
-                <label for="Address" class="form-label">Адрес</label>
-                <input v-model="Address" class="form-input" required />
+                <input v-model="Address" placeholder="Адрес"/>
             </div>
-            <div class="form-group">
-                <input type="button" @click="register" value="Зарегистрироваться" class="form-submit-btn" />
-            </div>
+            <a @click="register" class="btn red">Зарегистрироваться</a>
         </form>
     </div>
 </template>
@@ -71,8 +63,6 @@ import Axios from "axios";
                     Axios
                         .post(base.RegisterUrl, data)
                         .then(response => {
-                            console.log(response);
-
                             if (response.data.success) {
                                 window.location.href = base.IndexUrl;
                             }

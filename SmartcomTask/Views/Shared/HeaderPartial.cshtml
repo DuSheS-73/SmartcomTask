@@ -1,34 +1,41 @@
 ﻿<header id="header">
-    <div class="content">
+    <div class="container">
         <div class="">
-
+                <!--  -->
         </div>
 
-        <div class="navigation">
-            <ul>
+        <div class="navigation__block">
+            <ul class="nav">
+                <li><a href="@Url.Action("Index", "Home")">Главная</a></li>
                 <li><a href="@Url.Action("Index", "Items")">Каталог товаров</a></li>
                 <li><a href="@Url.Action("Index", "ShoppingCart")">Корзина</a></li>
                 <li><a href="@Url.Action("Index", "Orders")">Мои заказы</a></li>
             </ul> 
         </div>
-
-        <div class="user-info">
+        <div class="user__actions">
             @if(User.Identity.IsAuthenticated)
             {
-                <p>@User.Identity.Name</p>
-                @if(User.IsInRole("Admin"))
-                {
-                    <p>Администратор</p>
-                }
-                esle
-                {
-                    <p>Пользователь</p>
-                } 
+                <div class="user__info">  
+                    <p>@User.Identity.Name</p>
+
+                    @if(User.IsInRole("Admin"))
+                    {
+                        <p>Администратор</p>
+                    }
+                    else
+                    {
+                         <p>Пользователь</p>
+                    } 
+                </div>
+                <a href="@Url.Action("Logout", "Account")" class="btn white">Выход</a>
             }
             else
             {
-                <a href="@Url.Action("Login", "Account")">Войти</a>
-            }
-        </div>  
-    </div> 
+                <div class="reg__auth">
+                    <a href="@Url.Action("Login", "Account")" class="btn white">Войти</a>
+                    <a href="@Url.Action("Registration", "Account")" class="btn red  last-header-btn">Регистрация</a>
+                </div>
+            }   
+        </div>
+    </div>
 </header>

@@ -1,30 +1,23 @@
 <template>
-    <div class="edit">
-        <h1>Edit item {{ item.code }} / {{ item.name }}</h1>
-        <form>
+    <div class="form__block">
+        <h1>Edit item</h1>
+        <form class="form-submit">
             <div class="form-group">
-                <label for="item.code" class="form-label">Код товара</label>
-                <input v-model="item.code" class="form-input" required />
+                <input v-model="item.code" placeholder="Код товара"/>
             </div>
 
             <div class="form-group">
-                <label for="item.name" class="form-label">Наименование</label>
-                <input v-model="item.name" class="form-input" required />
+                <input v-model="item.name" placeholder="Наименование"/>
             </div>
 
             <div class="form-group">
-                <label for="item.price" class="form-label">Цена</label>
-                <input v-model="item.price" class="form-input" required />
+                <input v-model="item.price" placeholder="Цена"/>
             </div>
 
             <div class="form-group">
-                <label for="item.category" class="form-label">Категория</label>
-                <input v-model="item.category" class="form-input" required />
+                <input v-model="item.category" placeholder="Категория" />
             </div>
-
-            <div class="form-group">
-                <input type="button" @click="save" value="Сохранить" class="form-submit-btn" />
-            </div>
+            <a @click="save" class="btn red" >Сохранить</a>
         </form>
     </div>
 </template>
@@ -35,7 +28,8 @@ import Axios from "axios";
     export default {
         props: {
             EditUrl: String,
-            DetailsUrl: String
+            DetailsUrl: String,
+            IndexUrl: String
         },
 
         data() {
@@ -54,20 +48,26 @@ import Axios from "axios";
             save() {
                 var base = this;
 
+                var data = {
+                    ID: base.item.id,
+                    Code: base.item.code,
+                    Name: base.item.name,
+                    Price: parseInt(base.item.price),
+                    Category: base.item.category
+                }
+
                 var sure = confirm("Сохранить изменения?")
                 if(sure) {
                     new Promise(function (resolve, reject) {
                         Axios
-                            .post(base.EditUrl, {
-                                ID: base.item.id,
-                                Code: base.item.code,
-                                Name: base.item.name,
-                                Price: parseInt(base.item.price),
-                                Category: base.item.category
-                            })
+                            .post(base.EditUrl, data)
                             .then(res => {
-                                //window.location.href = base.IndexUrl;
-                                console.log(res);
+                                if (res.data.success) {
+                                    window.location.href = base.IndexUrl;
+                                }
+                                else {
+                                    base.errors = response.data;
+                                }
                             })
                             .catch(error => { console.log(error); });
                     });

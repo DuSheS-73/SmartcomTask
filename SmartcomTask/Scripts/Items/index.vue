@@ -1,5 +1,33 @@
 <template>
-    <div id="items">
+    <div class="items">
+
+        <a v-if="isAdmin" :href="CreateUrl">Add Item</a>
+
+        <div v-for="item in items" class="item__block">
+            <h2>{{ item.name }}</h2>
+
+            <div class="item__inner">
+                <div class="item__image"></div>
+
+                <div class="item__info">
+                    <p>Категория: {{ item.category }}</p>
+                    <p>Цена {{ item.price }}</p>
+                    <p>Код товара: {{ item.code }}</p>
+                </div>
+                
+                <div class="item__actions">
+                    <a v-if="isAdmin" @click="deleteItem(item.id)">Удалить</a>
+                    <a v-if="isAdmin" :href="EditUrl + '/' + item.id">Редактировать</a>
+                    <a @click="addToCart(item.id)">В корзину</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- <div id="items">
         <table class="table">
             <thead>
                 <tr>
@@ -46,7 +74,7 @@
                 </tr>
             </tfoot>
         </table>
-    </div>
+    </div> -->
 </template>
 
 <script>
