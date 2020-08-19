@@ -6,6 +6,7 @@ using Castle.Core.Internal;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.EntityFrameworkCore;
 using SmartcomTask.Domain;
 using SmartcomTask.Models;
@@ -18,11 +19,11 @@ namespace SmartcomTask.Controllers
     public class UsersController : Controller
     {
         private readonly DataManager dataManager;
-        //private readonly UserManager<ApplicationUser> userManager;
-        public UsersController(DataManager dataManager)
+        private readonly UserManager<ApplicationUser> userManager;
+        public UsersController(DataManager dataManager, UserManager<ApplicationUser> userManager)
         {
             this.dataManager = dataManager;
-            //this.userManager = userManager;
+            this.userManager = userManager;
         }
 
 
@@ -100,7 +101,7 @@ namespace SmartcomTask.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Guid Id, [FromBody] UserInfoViewModel model)
+        public async Task<IActionResult> Edit(Guid Id, [FromBody] EditUserViewModel model)
         {
             if(ModelState.IsValid)
             {
@@ -108,18 +109,21 @@ namespace SmartcomTask.Controllers
                 CurrentUser.Customer.Name = model.Name;
                 CurrentUser.UserName = model.UserName;
                 CurrentUser.Email = model.Email;
+                CurrentUser.Customer.Code = model.Code;
                 CurrentUser.Customer.Address = model.Address;
                 CurrentUser.Customer.Discount = model.Discount;
 
-                try
-                {
-                    //dataManager.userRepository.SaveUser(model);
-                    await dataManager.Commit();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    throw;
-                }
+
+                var result = await userManager.UpdateAsync(CurrentUser);
+                //try
+                //{
+                //    dataManager.userRepository.SaveUser(CurrentUser);
+                //    await dataManager.Commit();
+                //}
+                //catch (DbUpdateConcurrencyException)
+                //{
+                //    throw;
+                //}
                 return Json(new ActionConfirmResult());
             }
             return Json(new ActionConfirmResult { Errors = ModelState.SelectMany(s => s.Value.Errors.Select(e => e.ErrorMessage)).ToList() });

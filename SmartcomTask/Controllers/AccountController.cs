@@ -70,7 +70,7 @@ namespace SmartcomTask.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Registration([FromBody] UserInfoViewModel registrationModel)
+        public async Task<IActionResult> Registration([FromBody] RegisterViewModel registrationModel)
         {
             if (ModelState.IsValid)
             {

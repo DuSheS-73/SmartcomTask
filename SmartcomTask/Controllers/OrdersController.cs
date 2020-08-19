@@ -47,6 +47,15 @@ namespace SmartcomTask.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<JsonResult> SetOrderStatus([FromBody]Order order)
+        {
+            string[] Statuses = { "Новый", "Выполняется", "Выполнен" };
+            order.Status = Statuses[ Array.IndexOf(Statuses, order.Status) + 1 ];
+            dataManager.orderRepository.SaveOrder(order);
+
+            return Json(new ActionConfirmResult());
+        }
 
 
         [HttpPost]

@@ -17,6 +17,12 @@
             </div>
 
             <div class="form-group">
+                <label for="user.customer.code" class="form-label">Код</label>
+                <input v-model="user.customer.code" class="form-input" required />
+            </div>
+
+
+            <div class="form-group">
                 <label for="user.customer.address" class="form-label">Адрес</label>
                 <input v-model="user.customer.address" class="form-input" required />
             </div>
@@ -50,6 +56,7 @@ import Axios from "axios";
                     email: '',
                     customer: {
                         name: '',
+                        code: '',
                         address: '',
                         discount: ''
                     }
@@ -62,10 +69,11 @@ import Axios from "axios";
                 var base = this;
 
                 var data = {
+                    Id: base.user.id,
                     Name: base.user.customer.name,
                     UserName: base.user.userName,
                     Email: base.user.email,
-                    Password: '',
+                    code: base.user.customer.code,
                     Address: base.user.customer.address,
                     Discount: parseInt(base.user.customer.discount)    
                 }

@@ -42,7 +42,8 @@
                     </td>
                     <td>
                         <input type="button" @click="orderDetails(order.id)" value="Подробнее" />
-                        <a v-if="isAdmin || order.status === 'New'" @click="deleteOrder(order)">Отменить заказ</a>
+                        <a v-if="isAdmin || order.status === 'Новый'" @click="deleteOrder(order)">Отменить заказ</a>
+                        <a v-if="isAdmin && order.status != 'Выполнен'" @click="deleteOrder(order)">Сменить статус</a>
                     </td>
 
                 </tr>

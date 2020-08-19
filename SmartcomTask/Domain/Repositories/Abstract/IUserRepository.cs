@@ -11,7 +11,6 @@ namespace SmartcomTask.Domain.Repositories.Abstract
         IQueryable<ApplicationUser> GetUsers();
         ApplicationUser GetUserById(Guid? Id);
         List<string> UserCreateResult(ApplicationUser newUser);
-        void SaveUser(ApplicationUser entity);
         void DeleteUser(Guid Id);
     }
 }

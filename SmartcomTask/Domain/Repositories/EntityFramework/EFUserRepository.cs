@@ -40,18 +40,6 @@ namespace SmartcomTask.Domain.Repositories.EntityFramework
             return Errors;
         }
 
-        public void SaveUser(ApplicationUser entity)
-        {
-            if (entity.Id == default)
-            {
-                context.Entry(entity).State = EntityState.Added;
-            }
-            else
-            {
-                context.Entry(entity).State = EntityState.Modified;
-            }
-        }
-
         public void DeleteUser(Guid Id)
         {
             var user = context.Users.FirstOrDefault(u => u.Customer.Id == Id);

@@ -10,7 +10,7 @@ namespace SmartcomTask.Models
     public class ApplicationUser : IdentityUser<Guid>
     {
         public ApplicationUser() { }
-        public ApplicationUser(UserInfoViewModel registrationModel)
+        public ApplicationUser(RegisterViewModel registrationModel)
         { 
             Id = Guid.NewGuid();
             UserName = registrationModel.UserName;
@@ -23,8 +23,8 @@ namespace SmartcomTask.Models
             {
                 Name = registrationModel.Name,
                 Address = registrationModel.Address,
-                Code = new Random().Next(1000, 9999).ToString() + "-" + new DateTime().Year.ToString(),
-                Discount = registrationModel.Discount
+                Code = new Random().Next(1000, 9999).ToString() + "-" + DateTime.Now.Year.ToString(),
+                Discount = 0
             };
         }
         public virtual Customer Customer { get; set; }

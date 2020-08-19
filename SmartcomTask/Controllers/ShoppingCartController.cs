@@ -99,7 +99,7 @@ namespace SmartcomTask.Controllers
                 {
                     CustomerId = customer.Id,
                     OrderNumber = new Random().Next(),
-                    Status = "New"
+                    Status = "Новый"
                 };
                 dataManager.orderRepository.SaveOrder(order);
 
