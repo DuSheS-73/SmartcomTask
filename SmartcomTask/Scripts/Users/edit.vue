@@ -1,40 +1,38 @@
 <template>
-    <div class="edit">
-        <form>
+    <div class="form__block">
+
+        <h1>Изменение данных</h1>
+
+        <div v-if="errors.length != 0" class="alert danger__alert">
+            {{ errors[0] }}
+        </div>
+
+        <form class="form-submit">
             <div class="form-group">
-                <label for="user.userName" class="form-label">Логин</label>
-                <input v-model="user.userName" class="form-input" required />
+                <input v-model="user.userName" class="form-input" placeholder="Логин" />
             </div>
 
             <div class="form-group">
-                <label for="user.email" class="form-label">Email</label>
-                <input v-model="user.email" class="form-input" required />
+                <input v-model="user.email" class="form-input" placeholder="Email"  />
             </div>
 
             <div class="form-group">
-                <label for="user.customer.name" class="form-label">Имя</label>
-                <input v-model="user.customer.name" class="form-input" required />
+                <input v-model="user.customer.name" class="form-input" placeholder="Имя" />
             </div>
 
             <div class="form-group">
-                <label for="user.customer.code" class="form-label">Код</label>
-                <input v-model="user.customer.code" class="form-input" required />
-            </div>
-
-
-            <div class="form-group">
-                <label for="user.customer.address" class="form-label">Адрес</label>
-                <input v-model="user.customer.address" class="form-input" required />
+                <input v-model="user.customer.code" class="form-input" placeholder="Код" />
             </div>
 
             <div class="form-group">
-                <label for="user.customer.discount" class="form-label">Скидка</label>
-                <input v-model="user.customer.discount" class="form-input" required />
+                <input v-model="user.customer.address" class="form-input" placeholder="Адрес" />
             </div>
 
             <div class="form-group">
-                <input type="button" @click="save" value="Сохранить" class="form-submit-btn" />
+                <input v-model="user.customer.discount" class="form-input" placeholder="Скидка" />
             </div>
+
+            <a @click="save" class="btn red">Сохранить</a>
         </form>
     </div>
 </template>
@@ -45,7 +43,8 @@ import Axios from "axios";
     export default {
         props: {
             EditUrl: String,
-            DetailsUrl: String
+            DetailsUrl: String,
+            IndexUrl: String
         },
 
         data() {
@@ -60,7 +59,9 @@ import Axios from "axios";
                         address: '',
                         discount: ''
                     }
-                }
+                },
+
+                errors: []
             }
         },
 
@@ -81,9 +82,13 @@ import Axios from "axios";
                 new Promise(function (resolve, reject) {
                     Axios
                         .post(base.EditUrl, data)
-                        .then(res => {
-                            //window.location.href = base.IndexUrl;
-                            console.log(res);
+                        .then(response => {
+                            if(response.data.success) {
+                                window.location.href = base.IndexUrl;
+                            }
+                            else {
+                                base.errors = response.data.errors;
+                            }
                         })
                         .catch(error => { console.log(error); });
                 });
@@ -95,9 +100,8 @@ import Axios from "axios";
             new Promise(function (resolve, reject) {
                 Axios
                     .get(base.DetailsUrl)
-                    .then(res => {
-                        base.user = res.data;
-                        console.log(res);
+                    .then(response => {
+                        base.user = response.data;
                     })
                     .catch(error => { console.log(error); });
             });

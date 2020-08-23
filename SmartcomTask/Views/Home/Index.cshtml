@@ -1,13 +1,15 @@
 ﻿@{
-    ViewData["Title"] = "Home page";
     bool isAdmin = User.IsInRole("Admin");
 }
 
 <div id="app">
-    <h1>Home Page</h1>
     <home-component :is-admin="@isAdmin.ToString().ToLower()" 
-                    items-url="@Url.Action("Index", "Items")" 
-                    customers-url="@Url.Action("Index", "Users")"></home-component>
+                     items-url="@Url.Action("GetLastTenItems", "Home")"
+                     edit-url="@Url.Action("Edit", "Items")" 
+                     create-url="@Url.Action("Create", "Items")" 
+                     delete-url="@Url.Action("Delete", "Items")"
+                     add-to-cart-url="@Url.Action("AddToCart", "ShoppingCart")"
+                     items-page-url="@Url.Action("Index", "Items")"></home-component>
 </div>
 
 @section scripts{

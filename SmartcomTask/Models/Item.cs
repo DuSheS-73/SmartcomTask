@@ -25,6 +25,7 @@ namespace SmartcomTask.Models
         public int Price { get; set; }
 
         [Display(Name = "Категория товара")]
+        [StringLength(30, ErrorMessage = "{0} не должна превышать {1} символов")]
         public string Category { get; set; }
     }
 }

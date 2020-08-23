@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartcomTask.Domain.Repositories.Abstract;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using SmartcomTask.Models;
 
 namespace SmartcomTask.Domain.Repositories.EntityFramework

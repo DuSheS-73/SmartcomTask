@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using SmartcomTask.Domain;
 using SmartcomTask.Models;
 using SmartcomTask.Service;
+using SmartcomTask.ViewModels;
 
 namespace SmartcomTask.Controllers
 {
@@ -22,10 +23,6 @@ namespace SmartcomTask.Controllers
             this.dataManager = dataManager;
         }
 
-
-
-
-
         public IActionResult Index()
         {
             return View();
@@ -33,10 +30,11 @@ namespace SmartcomTask.Controllers
 
 
 
-        [HttpGet("ItemsData")]
-        public async Task<JsonResult> ItemsData()
+        [HttpGet]
+        public JsonResult ItemsData()
         {
-            var items = await dataManager.itemsRepository.GetItems().ToListAsync();
+            List<Item> items = dataManager.itemsRepository.GetItems().ToList();
+            items.Reverse();
             return Json(items);
         }
 
@@ -48,16 +46,14 @@ namespace SmartcomTask.Controllers
         {
             if (Id == null)
             {
-                // set to NotFound page
-                return RedirectToAction("Index", "Error");
+                return Json(new ActionConfirmResult() { Errors = new List<string>() { "Товар не найден" } });
             }
 
             var item = dataManager.itemsRepository.GetItemById(Id);
 
             if (item == null)
             {
-                // set to NotFound page
-                return RedirectToAction("Index", "Error");
+                return Json(new ActionConfirmResult() { Errors = new List<string>() { "Товар не найден" } });
             }
 
             return Json(item);
@@ -91,8 +87,7 @@ namespace SmartcomTask.Controllers
         {
             if(Id == null)
             {
-                // set to NotFound page
-                return RedirectToAction("Index", "Error");
+                return Json(new ActionConfirmResult() { Errors = new List<string>() { "Товар не найден" } });
             }
 
             ViewBag.Id = Id;
@@ -124,6 +119,17 @@ namespace SmartcomTask.Controllers
         }
 
 
+
+
+        [HttpPost]
+        public JsonResult ApplyFilter([FromBody] ItemsFilterViewModel model)
+        {
+            List<Item> items = dataManager.itemsRepository.GetItems().Where(c => c.Price >= model.PriceFrom
+                                                                                 && c.Price <= model.PriceTo
+                                                                                 && (c.Category.ToUpper() == model.Category.ToUpper() || model.Category == "")).ToList();
+            items.Reverse();
+            return Json(items);
+        }
 
 
 

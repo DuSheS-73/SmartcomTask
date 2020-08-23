@@ -1,5 +1,4 @@
 ﻿@{
-    ViewData["Title"] = "Items";
     var isAdmin = User.IsInRole("Admin");
 }
 
@@ -9,7 +8,8 @@
                      edit-url="@Url.Action("Edit", "Items")" 
                      create-url="@Url.Action("Create", "Items")" 
                      delete-url="@Url.Action("Delete", "Items")"
-                     add-to-cart-url="@Url.Action("AddToCart", "ShoppingCart")"></index-component>
+                     add-to-cart-url="@Url.Action("AddToCart", "ShoppingCart")"
+                     apply-filter-url="@Url.Action("ApplyFilter", "Items")"></index-component>
 </div>
 
 @section scripts{ 

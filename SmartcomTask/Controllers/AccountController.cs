@@ -52,7 +52,7 @@ namespace SmartcomTask.Controllers
                         return Json(new ActionConfirmResult());
                     }
                 }
-                ModelState.AddModelError(nameof(LoginViewModel.UserName), "Неверный логин или пароль");
+                return Json(new ActionConfirmResult { Errors = new List<string> { "Неверный логин или пароль" } });
             }
             return Json(new ActionConfirmResult { Errors = ModelState.SelectMany(s => s.Value.Errors.Select(e => e.ErrorMessage)).ToList() });
         }

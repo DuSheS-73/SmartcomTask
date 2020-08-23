@@ -2,6 +2,10 @@
     <div class="form__block">
         <h1>Авторизация</h1>
 
+        <div v-if="errors.length != 0" class="alert danger__alert">
+            {{ errors[0] }}
+        </div>
+
         <form class="form-submit">
             <div class="form-group">
                 <input v-model="userName" placeholder="Логин" />
@@ -10,7 +14,7 @@
                 <input v-model="password" type="password" placeholder="Пароль" />
             </div>
             <div class="form-group">
-                <label for="rememberMe" class="form-label">Запомнить пароль?</label>
+                <span>Запомнить пароль?</span>
                 <input v-model="rememberMe" type="checkbox" class="form-checkbox"/>
             </div>
             <a @click="login" class="btn red">Войти</a>
@@ -56,7 +60,7 @@ import Axios from "axios";
                                 window.location.href = base.IndexUrl;
                             }
                             else {
-                                base.errors = response.data;
+                                base.errors = response.data.errors;
                             }
                         })
                         .catch(error => { console.log(error); });

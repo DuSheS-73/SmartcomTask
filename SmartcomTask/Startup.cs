@@ -41,8 +41,8 @@ namespace SmartcomTask
             services.AddTransient<IOrderElementRepository, EFOrderElementRepository>();
             services.AddTransient<DataManager>();
 
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped(sp => ShoppingCart.GetCart(sp));
+            // initialize Shopping Cart
+            services.AddSingleton<ShoppingCart>();
 
             // connecting Database context
             services.AddDbContext<AppDbContext>(x => x.UseLazyLoadingProxies().UseSqlServer(Config.ConnectionString));

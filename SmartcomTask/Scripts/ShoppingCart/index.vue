@@ -1,5 +1,5 @@
 <template>
-    <div id="cart" v-if="cart.shoppingCart.shoppingCartItems.length > 0">
+    <div id="cart" v-if="cart.shoppingCart.allItems.length > 0">
         <table class="table">
             <thead>
                 <tr>
@@ -15,7 +15,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="i in cart.shoppingCart.shoppingCartItems">
+                <tr v-for="i in cart.shoppingCart.allItems">
                     <td>
                         {{ i.item.name }}
                     </td>
@@ -62,7 +62,7 @@ import Axios from "axios"
             return {
                 cart: {
                     shoppingCart: {
-                        shoppingCartItems: []
+                        allItems: []
                     },
                     total: 0
                 }
@@ -110,7 +110,7 @@ import Axios from "axios"
 
             makeOrder() {
                 var base = this;
-                var cartItems = this.cart.shoppingCart.shoppingCartItems;
+                var cartItems = this.cart.shoppingCart.allItems;
 
                 var sure = confirm("Оформить заказ?");
                 if (sure) {

@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Castle.Core.Internal;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Differencing;
-using Microsoft.EntityFrameworkCore;
 using SmartcomTask.Domain;
 using SmartcomTask.Models;
 using SmartcomTask.Service;
@@ -46,14 +43,14 @@ namespace SmartcomTask.Controllers
         {
             if (Id == null)
             {
-                return RedirectToAction("Index", "Error");
+                return Json(new ActionConfirmResult() { Errors = new List<string>() { "Пользователь не найден" } });
             }
 
             var user = dataManager.userRepository.GetUserById(Id);
             
             if(user == null)
             {
-                return RedirectToAction("Index", "Error");
+                return Json(new ActionConfirmResult() { Errors = new List<string>() { "Пользователь не найден" } });
             }
             return Json(user);
         }
@@ -65,35 +62,12 @@ namespace SmartcomTask.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Create([FromBody] RegisterViewModel model)
-        //{
-        //    if(ModelState.IsValid)
-        //    {
-        //        var newUser = new ApplicationUser(model);
-
-        //        List<string> RegistrationErrors = dataManager.userRepository.UserCreateResult(newUser);
-        //        if(RegistrationErrors.IsNullOrEmpty())
-        //        {
-        //            var result = await userManager.CreateAsync(newUser);
-        //            if (result.Succeeded)
-        //            {
-        //                await userManager.AddToRoleAsync(newUser, "User");
-        //                return Json(new ActionConfirmResult());
-        //            }
-        //        }
-        //        return Json(new ActionConfirmResult { Errors = RegistrationErrors });
-        //    }
-        //    return Json(new ActionConfirmResult { Errors = ModelState.SelectMany(s => s.Value.Errors.Select(e => e.ErrorMessage)).ToList() });
-        //}
-
-
 
         public IActionResult Edit(Guid? Id)
         {
             if(Id == null)
             {
-                return RedirectToAction("Index", "Error");
+                return Json(new ActionConfirmResult() { Errors = new List<string>() { "Пользователь не найден" } });
             }
 
             ViewBag.Id = Id;
@@ -115,15 +89,6 @@ namespace SmartcomTask.Controllers
 
 
                 await userManager.UpdateAsync(CurrentUser);
-                //try
-                //{
-                //    dataManager.userRepository.SaveUser(CurrentUser);
-                //    await dataManager.Commit();
-                //}
-                //catch (DbUpdateConcurrencyException)
-                //{
-                //    throw;
-                //}
                 return Json(new ActionConfirmResult());
             }
             return Json(new ActionConfirmResult { Errors = ModelState.SelectMany(s => s.Value.Errors.Select(e => e.ErrorMessage)).ToList() });

@@ -8,11 +8,20 @@ namespace SmartcomTask.Models
 {
     public class OrderElement
     {
+        public OrderElement() { }
+        public OrderElement(Order order, ShoppingCartItem item)
+        {
+            Order = order;
+            Item = item.Item;
+            ItemsCount = item.Amount;
+            ItemPrice = item.Item.Price;
+        }
+
+
         [Required]
         public Guid ID { get; set; }
 
         [Required]
-        //public Guid OrderId { get; set; }
         public virtual Order Order { get; set; }
 
         [Required]
@@ -20,11 +29,9 @@ namespace SmartcomTask.Models
         public virtual Item Item { get; set; }
 
         [Required]
-        [Display(Name = "Количество")]
         public int ItemsCount { get; set; }
 
         [Required]
-        [Display(Name = "Цена")]
         public int ItemPrice { get; set; }
     }
 }

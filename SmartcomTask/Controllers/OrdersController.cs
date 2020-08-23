@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -26,17 +25,18 @@ namespace SmartcomTask.Controllers
             return View();
         }
 
-        [HttpGet]
-        public JsonResult GetOrders()
+        [HttpPost]
+        public JsonResult GetOrders([FromBody]OrderStatusReceiveViewModel model)
         {
             if(User.IsInRole("Admin"))
             {
-                return Json(dataManager.orderRepository.GetAllOrders());
+                return Json(dataManager.orderRepository.GetAllOrders(model.GetStatus()));
             }
             else
             {
                 var customer = dataManager.customerRepository.GetCustomerByUserName(User.Identity.Name);
-                return Json(dataManager.orderRepository.GetOrdersBelongsToCustomer(customer.Id));
+                var data = dataManager.orderRepository.GetOrdersBelongsToCustomer(customer.Id, model.GetStatus());
+                return Json(data);
             }
         }
 
@@ -50,10 +50,10 @@ namespace SmartcomTask.Controllers
         [HttpPost]
         public async Task<JsonResult> SetOrderStatus([FromBody]Order order)
         {
-            string[] Statuses = { "Новый", "Выполняется", "Выполнен" };
-            order.Status = Statuses[ Array.IndexOf(Statuses, order.Status) + 1 ];
+            order.SetStatus();
             dataManager.orderRepository.SaveOrder(order);
-
+            await dataManager.Commit();
+            
             return Json(new ActionConfirmResult());
         }
 
@@ -65,12 +65,6 @@ namespace SmartcomTask.Controllers
             await dataManager.Commit();
 
             return Json(new ActionConfirmResult());
-        }
-
-
-
-
-
-       
+        } 
     }
 }

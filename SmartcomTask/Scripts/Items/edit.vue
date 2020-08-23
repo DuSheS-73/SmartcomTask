@@ -1,6 +1,12 @@
 <template>
     <div class="form__block">
-        <h1>Edit item</h1>
+
+        <h1>Изменение данных</h1>
+
+        <div v-if="errors.length != 0" class="alert danger__alert">
+            {{ errors[0] }}
+        </div>
+
         <form class="form-submit">
             <div class="form-group">
                 <input v-model="item.code" placeholder="Код товара"/>
@@ -40,7 +46,9 @@ import Axios from "axios";
                     name: '',
                     price: '',
                     category: ''
-                }
+                },
+
+                errors: []
             }
         },
 
@@ -61,12 +69,12 @@ import Axios from "axios";
                     new Promise(function (resolve, reject) {
                         Axios
                             .post(base.EditUrl, data)
-                            .then(res => {
-                                if (res.data.success) {
+                            .then(response => {
+                                if (response.data.success) {
                                     window.location.href = base.IndexUrl;
                                 }
                                 else {
-                                    base.errors = response.data;
+                                    base.errors = response.data.errors;
                                 }
                             })
                             .catch(error => { console.log(error); });
@@ -82,7 +90,6 @@ import Axios from "axios";
                     .get(base.DetailsUrl)
                     .then(res => {
                         base.item = res.data;
-                        console.log(res);
                     })
                     .catch(error => { console.log(error); });
             });

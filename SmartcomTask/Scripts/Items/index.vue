@@ -1,154 +1,147 @@
 <template>
     <div class="items">
 
-        <a v-if="isAdmin" :href="CreateUrl">Add Item</a>
+        <h1>Каталог товаров</h1>
 
-        <div v-for="item in items" class="item__block">
-            <h2>{{ item.name }}</h2>
+        <div class="display__flex">
 
-            <div class="item__inner">
-                <div class="item__image"></div>
+            <div class="filter__block">
+                <div class="filter__inner">
 
-                <div class="item__info">
-                    <p>Категория: {{ item.category }}</p>
-                    <p>Цена {{ item.price }}</p>
-                    <p>Код товара: {{ item.code }}</p>
+                    <h3>Фильтр</h3>
+
+                    <div v-if="isAdmin" class="filter__group">
+                        <h4>Админ</h4>
+                        <a :href="CreateUrl" class="edit__btn">Добавить товар</a>
+                    </div>
+
+                    <div class="filter__group">   
+                        <h4 @click="extendSection(0)" class="clickable">Категория <i class="fas" v-bind:class="[expandableMenus[0].visible ? 'fa-angle-down' : 'fa-angle-right']"></i></h4>
+
+                        <div v-bind:class="[expandableMenus[0].visible ? 'visible' : 'hidden']" >
+
+                            <a v-for="category in categories" v-bind:class="{'active__filter': category.isSelected}"
+                               class="clickable" @click="selectCategoryOption(categories.indexOf(category))">{{ category.name }}</a>
+
+                        </div>
+                    </div>
+
+                    <div class="filter__group">
+                        <h4 @click="extendSection(1)" class="clickable">Цена <i class="fas" v-bind:class="[expandableMenus[1].visible ? 'fa-angle-down' : 'fa-angle-right']"></i></h4>
+
+                        <div v-bind:class="[expandableMenus[1].visible ? 'visible' : 'hidden']" >
+                            <input v-model="priceFrom" type="text" placeholder="от">
+                            <input v-model="priceTo" type="text" placeholder="до">
+                        </div>
+                    </div>
+
+                    <div class="apply__block">
+                        <a @click="applyFilterRef" class="btn red">Применить</a>
+                    </div>
                 </div>
-                
-                <div class="item__actions">
-                    <a v-if="isAdmin" @click="deleteItem(item.id)">Удалить</a>
-                    <a v-if="isAdmin" :href="EditUrl + '/' + item.id">Редактировать</a>
-                    <a @click="addToCart(item.id)">В корзину</a>
-                </div>
-
             </div>
+            
+            <item-blocks-component ref="ItemBlock"
+                                   :is-admin="isAdmin"
+                                   :items-url="ItemsUrl"
+                                   :edit-url="EditUrl"
+                                   :create-url="CreateUrl"
+                                   :delete-url="DeleteUrl"
+                                   :add-to-cart-url="AddToCartUrl"
+                                   :apply-filter-url="ApplyFilterUrl"></item-blocks-component>
         </div>
     </div>
-
-
-
-    <!-- <div id="items">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th v-if="isAdmin">
-                        Код товара
-                    </th>
-                    <th>
-                        Наименование
-                    </th>
-                    <th>
-                        Цена
-                    </th>
-                    <th>
-                        Категория
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in items">
-                    <td v-if="isAdmin">
-                        {{ item.code }}
-                    </td>
-                    <td>
-                        {{ item.name }}
-                    </td>
-                    <td>
-                        {{ item.price }}
-                    </td>
-                    <td>
-                        {{ item.category }}
-                    </td>
-                    <td>
-                        <a @click="addToCart(item.id)">Добавить в корзину</a>
-                        <a v-if="isAdmin" :href="EditUrl + '/' + item.id">Edit</a>
-                        <a v-if="isAdmin" @click="deleteItem(item.id)">Delete</a>
-                    </td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td>
-                        <a v-if="isAdmin" :href="CreateUrl">Add Item</a>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-    </div> -->
 </template>
 
 <script>
-import Axios from "axios"
+import Axios from "axios";
+import ItemsComponent from "./item_blocks.vue";
 
     export default {
+        components: {
+            'item-blocks-component': ItemsComponent
+        },
+
         props: {
             isAdmin: Boolean,
             ItemsUrl: String,
             EditUrl: String,
             CreateUrl: String,
             DeleteUrl: String,
-            AddToCartUrl: String
+            AddToCartUrl: String,
+            ApplyFilterUrl: String
         },
         data() {
             return {
-                items: [],
+                expandableMenus: [
+                    {
+                        visible: false
+                    },
+                    {
+                        visible: false
+                    }
+                ],
+
+                categories: [
+                    {
+                        name: 'Категория_1',
+                        isSelected: false
+                    },
+                    {
+                        name: 'Категория_2',
+                        isSelected: false
+                    },
+                    {
+                        name: 'Категория_3',
+                        isSelected: false
+                    },
+                    {
+                        name: 'Категория_4',
+                        isSelected: false
+                    },
+                    {
+                        name: 'Категория_5',
+                        isSelected: false
+                    },
+                ],
+
+                categoryOption: '',
+                priceFrom: 0,
+                priceTo: 50000
             }
         },
-
 
         methods: {
-            deleteItem(id) {
-                var base = this;
-
-                var currentItem = base.items.filter(f => { return f.id === id; })[0];
-                var sure = confirm("Удалить " + currentItem.name + "?");
-
-                if (sure) {
-                    new Promise(function (resolve, reject) {
-                        Axios
-                            .post(base.DeleteUrl + '/' + currentItem.id)
-                            .then(res => {
-                                console.log(res);
-                                window.location.reload();
-                            })
-                            .catch(error => { console.log(error); });
-                    });
-                }
+            extendSection(index) {
+                var element = this.expandableMenus[index];
+                element.visible ? element.visible = false : element.visible = true;
             },
 
-            addToCart(id) {
+            applyFilterRef() {
                 var base = this;
 
-                var currentItem = base.items.filter(f => { return f.id === id; })[0];
-                var sure = confirm("Добавить " + currentItem.name + " в корзину? ");
+                var filterOptions = {
+                    Category: base.categoryOption,
+                    PriceFrom: parseInt(base.priceFrom),
+                    PriceTo: parseInt(base.priceTo)
+                }
 
-                if (sure) {
-                    new Promise(function (resolve, reject) {
-                        Axios
-                            .post(base.AddToCartUrl, currentItem)
-                            .then(res => {
-                                console.log(res);
-                            })
-                            .catch(error => { console.log(error); });
-                    });
+                base.$refs['ItemBlock'].applyFilter(filterOptions);
+            },
+
+            selectCategoryOption(index) {
+
+                this.categories.forEach(category => { category.isSelected = false });
+
+                if (this.categories[index].isSelected) {
+                    this.categoryOption = '';
+                    this.categories[index].isSelected = false;
+                }
+                else {
+                    this.categoryOption = this.categories[index].name;
+                    this.categories[index].isSelected = true;
                 }
             }
-        },
-
-        mounted() {
-            var base = this;
-
-            new Promise(function (resolve, reject) {
-                Axios
-                    .get(base.ItemsUrl)
-                    .then(response => {
-                        console.log(response);
-                        base.items = response.data;
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-            });   
         }
     };
 </script>

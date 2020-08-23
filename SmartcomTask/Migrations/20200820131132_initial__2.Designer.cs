@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartcomTask.Domain;
 
 namespace SmartcomTask.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200820131132_initial__2")]
+    partial class initial__2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,8 +105,8 @@ namespace SmartcomTask.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("4dc1f2a8-3341-4975-b99a-59540154a0b2"),
-                            RoleId = new Guid("1089ef37-063a-493d-a2c7-a9b07d866afd")
+                            UserId = new Guid("d3405634-19c5-4562-9311-ed7e84c36522"),
+                            RoleId = new Guid("84a52946-11b8-41f0-841b-fd0c9b69add5")
                         });
                 });
 
@@ -157,15 +159,15 @@ namespace SmartcomTask.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1089ef37-063a-493d-a2c7-a9b07d866afd"),
-                            ConcurrencyStamp = "6773e182-7033-49df-8e19-1012a38467ca",
+                            Id = new Guid("84a52946-11b8-41f0-841b-fd0c9b69add5"),
+                            ConcurrencyStamp = "a5d59bde-5985-4774-b4e3-8d841eadc3e2",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("f76a4a21-aeeb-41b3-8d2c-c3fb5ba187e1"),
-                            ConcurrencyStamp = "db8bf497-822f-4866-a348-8e5590bcf7d5",
+                            Id = new Guid("6e776a39-8d7f-4b1c-a604-f7e8306502af"),
+                            ConcurrencyStamp = "811e22b7-7844-44dc-a4d8-888446fc522a",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -239,15 +241,15 @@ namespace SmartcomTask.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4dc1f2a8-3341-4975-b99a-59540154a0b2"),
+                            Id = new Guid("d3405634-19c5-4562-9311-ed7e84c36522"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c4a124f2-79ea-435a-b712-f3017b1ffdbc",
+                            ConcurrencyStamp = "e2bf5ea9-cc45-4696-97cb-2c30a343e9ba",
                             Email = "admin@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJOarmUI1ND73PZlpwqoXHOJWI6gwmDLDQm/6FVjG1Uhrzi9P0Qq8EcnII9cSvxF5g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEH1ta6TG6SYLF7ZKlaJX7pgfDQ4Vq9tVugYL/u4k47klFY4beqYmlfyZnzxv1UOZZw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -286,8 +288,7 @@ namespace SmartcomTask.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Category")
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Code")
                         .IsRequired()

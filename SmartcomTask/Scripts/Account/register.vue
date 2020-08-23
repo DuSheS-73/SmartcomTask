@@ -2,6 +2,11 @@
     <div class="form__block">
 
         <h1>Регистрация</h1>
+
+        <div v-if="errors.length != 0" class="alert danger__alert">
+            {{ errors[0] }}
+        </div>
+
         <form class="form-submit">
             <div class="form-group">
                 <input v-model="Name" placeholder="Имя"/>
@@ -67,7 +72,7 @@ import Axios from "axios";
                                 window.location.href = base.IndexUrl;
                             }
                             else {
-                                base.errors = response.data;
+                                base.errors = response.data.errors;
                             }   
                         })
                         .catch(error => { console.log(error); });

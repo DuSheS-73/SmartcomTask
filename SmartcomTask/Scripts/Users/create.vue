@@ -1,6 +1,11 @@
 <template>
     <div class="form__block">
+    
         <h1>Создать нового пользователя</h1>
+
+        <div v-if="errors.length != 0" class="alert danger__alert">
+            {{ errors[0] }}
+        </div>
 
         <form class="form-submit">
             <div class="form-group">
@@ -62,12 +67,12 @@ import Axios from "axios";
                 new Promise(function (resolve, reject) {
                     Axios
                         .post(base.CreateUrl, data)
-                        .then(res => {
-                            if (res.data.success) {
+                        .then(response => {
+                            if (response.data.success) {
                                 window.location.href = base.IndexUrl;
                             }
                             else {
-                                base.errors = res.data;
+                                base.errors = response.data.errors;
                             }
                         })
                         .catch(error => { console.log(error); });

@@ -1,62 +1,32 @@
 <template>
-    <div id="items">
-        <a :href="ItemsUrl">All items</a>
-        <a v-if="isAdmin" :href="CustomersUrl">Show customers</a>
+    <div class="home">
+        <h1>Новики</h1>
+        <item-blocks-component :is-admin="isAdmin"
+                        :items-url="ItemsUrl"
+                        :edit-url="EditUrl"
+                        :create-url="CreateUrl"
+                        :delete-url="DeleteUrl"
+                        :add-to-cart-url="AddToCartUrl"></item-blocks-component>
+        <a :href="ItemsPageUrl" class="btn red">Показать все</a>
     </div>
 </template>
 
 <script>
-import Axios from "axios"
+import ItemComponent from "../Items/item_blocks.vue";
 
     export default {
+        components: {
+            'item-blocks-component': ItemComponent
+        },
+
         props: {
             isAdmin: Boolean,
             ItemsUrl: String,
-            CustomersUrl: String
-            //ItemsUrl: String,
-            //EditUrl: String,
-            //CreateUrl: String,
-            //DeleteUrl: String
-        },
-        data() {
-            return {
-                //items: [],
-            }
-        },
-
-
-        methods: {
-            //deleteItem(id) {
-            //    var base = this;
-
-            //    var currentItem = base.items.filter(f => { return f.id === id; })[0];
-            //    var sure = confirm("Do you want to delete item -> " + currentItem.name + " ( " + currentItem.code + " )? ");
-
-            //    if (sure) {
-            //        new Promise(function (resolve, reject) {
-            //            Axios
-            //                .post(base.DeleteUrl + '/' + currentItem.id)
-            //                .then(res => res)
-            //                .catch(error => { console.log(error); });
-            //        });
-            //    }
-            //}
-        },
-
-        mounted() {
-            //var base = this;
-
-            //new Promise(function (resolve, reject) {
-            //    Axios
-            //        .get(base.ItemsUrl)
-            //        .then(response => {
-            //            console.log(response);
-            //            base.items = response.data;
-            //        })
-            //        .catch(error => {
-            //            console.log(error);
-            //        });
-            //});   
+            EditUrl: String,
+            CreateUrl: String,
+            DeleteUrl: String,
+            AddToCartUrl: String,
+            ItemsPageUrl: String
         }
     };
 </script>

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartcomTask.Domain;
 
 namespace SmartcomTask.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200820130247_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,8 +105,8 @@ namespace SmartcomTask.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("4dc1f2a8-3341-4975-b99a-59540154a0b2"),
-                            RoleId = new Guid("1089ef37-063a-493d-a2c7-a9b07d866afd")
+                            UserId = new Guid("4b7e18de-80d2-46cc-93bd-963eacb21a43"),
+                            RoleId = new Guid("c9fd7807-471d-46b2-8c36-28f9caf15014")
                         });
                 });
 
@@ -157,15 +159,15 @@ namespace SmartcomTask.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1089ef37-063a-493d-a2c7-a9b07d866afd"),
-                            ConcurrencyStamp = "6773e182-7033-49df-8e19-1012a38467ca",
+                            Id = new Guid("c9fd7807-471d-46b2-8c36-28f9caf15014"),
+                            ConcurrencyStamp = "2a701025-f0b5-4df8-86ff-9c9d1ad14882",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("f76a4a21-aeeb-41b3-8d2c-c3fb5ba187e1"),
-                            ConcurrencyStamp = "db8bf497-822f-4866-a348-8e5590bcf7d5",
+                            Id = new Guid("84c78faf-4128-42ff-aff6-c00cc6ab2ef4"),
+                            ConcurrencyStamp = "e448a183-0599-40b6-91b7-ea9cfe47af4d",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -239,15 +241,15 @@ namespace SmartcomTask.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4dc1f2a8-3341-4975-b99a-59540154a0b2"),
+                            Id = new Guid("4b7e18de-80d2-46cc-93bd-963eacb21a43"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c4a124f2-79ea-435a-b712-f3017b1ffdbc",
+                            ConcurrencyStamp = "658a0290-11db-44ad-aff6-736e1f9fbdbe",
                             Email = "admin@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJOarmUI1ND73PZlpwqoXHOJWI6gwmDLDQm/6FVjG1Uhrzi9P0Qq8EcnII9cSvxF5g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKxCdAX1LccHVg1WVrRq3Xb84qGZqchebRMFrCGPTMdPRRXCEmIPRA6V4nWqSpk4kA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -286,8 +288,7 @@ namespace SmartcomTask.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Category")
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -319,7 +320,7 @@ namespace SmartcomTask.Migrations
                     b.Property<int>("OrderNumber")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ShipmentDate")
+                    b.Property<DateTime?>("ShipmentDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Status")

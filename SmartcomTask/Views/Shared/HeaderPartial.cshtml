@@ -6,6 +6,10 @@
 
         <div class="navigation__block">
             <ul class="nav">
+                @if(User.IsInRole("Admin"))
+                {
+                    <li><a href="@Url.Action("Index", "Users")">Пользователи</a></li>
+                }
                 <li><a href="@Url.Action("Index", "Home")">Главная</a></li>
                 <li><a href="@Url.Action("Index", "Items")">Каталог товаров</a></li>
                 <li><a href="@Url.Action("Index", "ShoppingCart")">Корзина</a></li>
@@ -27,7 +31,7 @@
                          <p>Пользователь</p>
                     } 
                 </div>
-                <a href="@Url.Action("Logout", "Account")" class="btn white">Выход</a>
+                <a href="@Url.Action("Logout", "Account")" class="btn red">Выход</a>
             }
             else
             {

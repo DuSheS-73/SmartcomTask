@@ -35,9 +35,6 @@ namespace SmartcomTask.Controllers
         [HttpGet]
         public JsonResult GetCart()
         {
-            var items = shoppingCart.GetShoppingCartItems();
-            shoppingCart.ShoppingCartItems = items;
-
             ShoppingCartViewModel cartVM = new ShoppingCartViewModel
             {
                 ShoppingCart = shoppingCart,
@@ -49,12 +46,11 @@ namespace SmartcomTask.Controllers
 
 
         [HttpPost]
-        public async Task<JsonResult> AddToCart([FromBody]Item item)
+        public JsonResult AddToCart([FromBody]Item item)
         {
             if(ModelState.IsValid)
             {
                 shoppingCart.AddToCart(item, 1);
-                await dataManager.Commit();
 
                 return Json(new ActionConfirmResult());
             }
@@ -89,29 +85,18 @@ namespace SmartcomTask.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> ConfirmOrder([FromBody] List<ShoppingCartItem> shoppingCart)
+        public async Task<IActionResult> ConfirmOrder([FromBody] List<ShoppingCartItem> shoppingCartItems)
         {
             if (ModelState.IsValid)
             {
                 var customer = dataManager.customerRepository.GetCustomerByUserName(User.Identity.Name);
 
-                Order order = new Order()
-                {
-                    CustomerId = customer.Id,
-                    OrderNumber = new Random().Next(),
-                    Status = "Новый"
-                };
+                Order order = new Order(customer.Id);
                 dataManager.orderRepository.SaveOrder(order);
 
-                foreach (var item in shoppingCart)
+                foreach (var item in shoppingCartItems)
                 {
-                    OrderElement element = new OrderElement
-                    {
-                        Order = order,
-                        Item = item.Item,
-                        ItemsCount = item.Amount,
-                        ItemPrice = item.Item.Price
-                    };
+                    OrderElement element = new OrderElement(order, item);
                     dataManager.orderElementRepository.SaveOrderElement(element);
                 }
 

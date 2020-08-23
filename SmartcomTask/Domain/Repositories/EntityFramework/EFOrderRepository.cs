@@ -14,14 +14,51 @@ namespace SmartcomTask.Domain.Repositories.EntityFramework
             this.context = context;
         }
 
-        public IQueryable<Order> GetAllOrders()
+        private void InitializeDateDisplayValues(IQueryable<Order> orders)
         {
-            return context.Orders.OrderBy(c => c.Status);
+            foreach (var order in orders)
+            {
+                order.OrderDateDisplay = order.OrderDate.ToString("dd/MM/yyyy");
+
+                if (order.ShipmentDate != default)
+                {
+                    order.ShipmentDateDisplay = order.ShipmentDate.ToString("dd/MM/yyyy");
+                }
+            }
         }
 
-        public IQueryable<Order> GetOrdersBelongsToCustomer(Guid customerId)
+
+        public IQueryable<Order> GetAllOrders(string status)
         {
-           return context.Orders.Where(c => c.CustomerId == customerId).OrderBy(o => o.Status);
+            IQueryable<Order> orders;
+            if (status == "")
+            {
+                orders = context.Orders.OrderBy(c => c.Status);
+                
+            }
+            else
+            {
+                orders = context.Orders.Where(c => c.Status == status);
+            }
+            InitializeDateDisplayValues(orders);
+
+            return orders;
+        }
+
+        public IQueryable<Order> GetOrdersBelongsToCustomer(Guid customerId, string status)
+        {
+            IQueryable<Order> orders;
+            if (status == "")
+            {
+                orders = context.Orders.Where(c => c.CustomerId == customerId).OrderBy(o => o.Status);
+            }
+            else
+            {
+                orders = context.Orders.Where(c => c.CustomerId == customerId && c.Status == status);
+            }
+            InitializeDateDisplayValues(orders);
+
+            return orders;
         }
 
         public void SaveOrder(Order entity)

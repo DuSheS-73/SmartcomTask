@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using SmartcomTask.Domain;
 using SmartcomTask.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SmartcomTask.Controllers
 {
@@ -20,12 +17,18 @@ namespace SmartcomTask.Controllers
             this.dataManager = dataManager;
         }
 
+
         public IActionResult Index()
         {
-            //Customer customer = dataManager.customerRepository.GetCustomerByUserName(User.Identity.Name);
             return View();
         }
 
-        
+        [HttpGet]
+        public JsonResult GetLastTenItems()
+        {
+            List<Item> items = dataManager.itemsRepository.GetItems().ToList();
+            items.Reverse();
+            return Json(items.Take(10));
+        }
     }
 }
