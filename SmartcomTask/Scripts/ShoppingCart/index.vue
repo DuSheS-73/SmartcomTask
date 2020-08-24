@@ -26,19 +26,15 @@
                         {{ i.amount }}
                     </td>
                     <td>
-                        <a @click="removeFromCart(i.item)">Убрать</a>
+                        <a @click="removeFromCart(i.item)" class="btn black">Убрать</a>
                     </td>
                 </tr>
             </tbody>
-            <tfoot>
-                <tr>
-                    <td v-if="">
-                        <a @click="clearCart">Отчистить корзину</a>
-                        <a @click="makeOrder">Перейти к оплате</a>
-                    </td>
-                </tr>
-            </tfoot>
         </table>
+
+        <a @click="clearCart" class="btn black">Отчистить корзину</a>
+        <a @click="makeOrder" class="btn red">Перейти к оплате</a>
+        
     </div>
     <div v-else id="cart-empty">
         <h2>Корзина пуста. Загляните в <a :href="CatalogUrl">каталог товаров</a></h2>

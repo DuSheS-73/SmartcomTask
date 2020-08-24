@@ -283,7 +283,7 @@ header a {
 }
 
 .item__info h3 {
-  margin-top: 70%;
+  margin-top: 60%;
 }
 
 .item__info h4 {
@@ -401,25 +401,28 @@ header a {
   margin: 35px 0;
 }
 
-.users table {
+table {
   width: 100%;
+  text-align: center;
   border-collapse: collapse;
+  margin-bottom: 30px;
 }
 
-.users table tr {
+table tr {
   background-color: #f0f0f0;
 }
 
-.users table tbody tr:nth-child(odd) {
+table tbody tr:nth-child(odd) {
   background-color: #fff;
 }
 
-.users table th,
-.users table td {
+table th,
+table td {
   border: 1px solid #333;
+  padding: 5px;
 }
 
-.users table a {
+table a {
   display: block;
   padding: 3px 0;
 }
@@ -488,3 +491,20 @@ header a {
 }
 
 /*  !ORDERS  */
+
+/*  SHOPPING CART  */
+
+#cart,
+#cart-empty {
+  text-align: center;
+}
+
+#cart-empty a {
+  color: #e06149;
+}
+
+#cart-empty a:hover {
+  letter-spacing: 3px;
+}
+
+/*  !SHOPPING CART  */

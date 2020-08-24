@@ -130,12 +130,9 @@ import ItemsComponent from "./item_blocks.vue";
             },
 
             selectCategoryOption(index) {
-
-                this.categories.forEach(category => { category.isSelected = false });
-
-                if (this.categories[index].isSelected) {
+                if (this.categories[index].isSelected) {       
+                    this.categories.forEach(category => { category.isSelected = false });
                     this.categoryOption = '';
-                    this.categories[index].isSelected = false;
                 }
                 else {
                     this.categoryOption = this.categories[index].name;

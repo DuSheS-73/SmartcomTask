@@ -33,7 +33,7 @@ namespace SmartcomTask.Domain.Repositories.EntityFramework
             IQueryable<Order> orders;
             if (status == "")
             {
-                orders = context.Orders.OrderBy(c => c.Status);
+                orders = context.Orders.OrderByDescending(c => c.Status);
                 
             }
             else
@@ -50,7 +50,7 @@ namespace SmartcomTask.Domain.Repositories.EntityFramework
             IQueryable<Order> orders;
             if (status == "")
             {
-                orders = context.Orders.Where(c => c.CustomerId == customerId).OrderBy(o => o.Status);
+                orders = context.Orders.Where(c => c.CustomerId == customerId).OrderByDescending(o => o.Status);
             }
             else
             {
