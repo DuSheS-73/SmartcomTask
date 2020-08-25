@@ -100,6 +100,8 @@ namespace SmartcomTask
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            InitializeDatabase(app);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -125,6 +127,15 @@ namespace SmartcomTask
             {
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+
+        private void InitializeDatabase(IApplicationBuilder app)
+        {
+            using(var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.Migrate();
+            }
         }
     }
 }

@@ -27,7 +27,6 @@ namespace SmartcomTask.Domain
                 .HasForeignKey<Customer>(k => k.Id)
                 .OnDelete(DeleteBehavior.Cascade);
 
-
             builder.Entity<Order>()
                 .HasOne<Customer>()
                 .WithMany()

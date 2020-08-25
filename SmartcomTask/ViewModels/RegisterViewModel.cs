@@ -14,6 +14,8 @@ namespace SmartcomTask.ViewModels
         public string Email { get; set; }
 
         [Required]
+        [Display(Name = "Пароль")]
+        [MinLength(8, ErrorMessage = "{0} должен содержать не менее {1} символов")]
         public string Password { get; set; }
 
         public string Address { get; set; }

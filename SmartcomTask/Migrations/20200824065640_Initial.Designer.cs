@@ -10,8 +10,8 @@ using SmartcomTask.Domain;
 namespace SmartcomTask.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200823102740_Initial__55")]
-    partial class Initial__55
+    [Migration("20200824065640_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -105,8 +105,8 @@ namespace SmartcomTask.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("4dc1f2a8-3341-4975-b99a-59540154a0b2"),
-                            RoleId = new Guid("1089ef37-063a-493d-a2c7-a9b07d866afd")
+                            UserId = new Guid("bf53a18d-bef3-4634-8125-68059ddeeec6"),
+                            RoleId = new Guid("5d79fd0d-5552-4310-9ff6-4ffad7703587")
                         });
                 });
 
@@ -159,15 +159,15 @@ namespace SmartcomTask.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1089ef37-063a-493d-a2c7-a9b07d866afd"),
-                            ConcurrencyStamp = "6773e182-7033-49df-8e19-1012a38467ca",
+                            Id = new Guid("5d79fd0d-5552-4310-9ff6-4ffad7703587"),
+                            ConcurrencyStamp = "e170dd3e-4948-4aa1-a37b-5ffc3bb6f747",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("f76a4a21-aeeb-41b3-8d2c-c3fb5ba187e1"),
-                            ConcurrencyStamp = "db8bf497-822f-4866-a348-8e5590bcf7d5",
+                            Id = new Guid("33da7664-3086-4c27-a01e-66c591dd37db"),
+                            ConcurrencyStamp = "d395aac5-efcb-43de-8860-9cfeaf14b18c",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -241,15 +241,15 @@ namespace SmartcomTask.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4dc1f2a8-3341-4975-b99a-59540154a0b2"),
+                            Id = new Guid("bf53a18d-bef3-4634-8125-68059ddeeec6"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c4a124f2-79ea-435a-b712-f3017b1ffdbc",
+                            ConcurrencyStamp = "c63a324e-7f54-463c-9588-bdb7ff94dc45",
                             Email = "admin@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJOarmUI1ND73PZlpwqoXHOJWI6gwmDLDQm/6FVjG1Uhrzi9P0Qq8EcnII9cSvxF5g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDJLnfptmZX9vfJsLakJ2CqMtotYP25mnTcTS6LQN6AoT+pcdjYY4RHIkirrioUj/Q==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,

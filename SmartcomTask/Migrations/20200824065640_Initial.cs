@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SmartcomTask.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,7 +54,7 @@ namespace SmartcomTask.Migrations
                     Code = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Price = table.Column<int>(nullable: false),
-                    Category = table.Column<string>(nullable: true)
+                    Category = table.Column<string>(maxLength: 30, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -195,7 +195,7 @@ namespace SmartcomTask.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     CustomerId = table.Column<Guid>(nullable: false),
                     OrderDate = table.Column<DateTime>(type: "date", nullable: false),
-                    ShipmentDate = table.Column<DateTime>(type: "date", nullable: true),
+                    ShipmentDate = table.Column<DateTime>(type: "date", nullable: false),
                     OrderNumber = table.Column<int>(nullable: false),
                     Status = table.Column<string>(nullable: true)
                 },
@@ -240,22 +240,22 @@ namespace SmartcomTask.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("c9fd7807-471d-46b2-8c36-28f9caf15014"), "2a701025-f0b5-4df8-86ff-9c9d1ad14882", "Admin", "ADMIN" });
+                values: new object[] { new Guid("5d79fd0d-5552-4310-9ff6-4ffad7703587"), "e170dd3e-4948-4aa1-a37b-5ffc3bb6f747", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("84c78faf-4128-42ff-aff6-c00cc6ab2ef4"), "e448a183-0599-40b6-91b7-ea9cfe47af4d", "User", "USER" });
+                values: new object[] { new Guid("33da7664-3086-4c27-a01e-66c591dd37db"), "d395aac5-efcb-43de-8860-9cfeaf14b18c", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("4b7e18de-80d2-46cc-93bd-963eacb21a43"), 0, "658a0290-11db-44ad-aff6-736e1f9fbdbe", "admin@email.com", true, false, null, "ADMIN@EMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEKxCdAX1LccHVg1WVrRq3Xb84qGZqchebRMFrCGPTMdPRRXCEmIPRA6V4nWqSpk4kA==", null, false, "", false, "Admin" });
+                values: new object[] { new Guid("bf53a18d-bef3-4634-8125-68059ddeeec6"), 0, "c63a324e-7f54-463c-9588-bdb7ff94dc45", "admin@email.com", true, false, null, "ADMIN@EMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEDJLnfptmZX9vfJsLakJ2CqMtotYP25mnTcTS6LQN6AoT+pcdjYY4RHIkirrioUj/Q==", null, false, "", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { new Guid("4b7e18de-80d2-46cc-93bd-963eacb21a43"), new Guid("c9fd7807-471d-46b2-8c36-28f9caf15014") });
+                values: new object[] { new Guid("bf53a18d-bef3-4634-8125-68059ddeeec6"), new Guid("5d79fd0d-5552-4310-9ff6-4ffad7703587") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

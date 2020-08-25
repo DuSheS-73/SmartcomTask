@@ -18,7 +18,7 @@ namespace SmartcomTask.Models
             Email = registrationModel.Email;
             NormalizedEmail = registrationModel.Email.ToUpper();
             EmailConfirmed = true;
-            PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(this, registrationModel.Password);
+            PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, registrationModel.Password);
             Customer = new Customer
             {
                 Name = registrationModel.Name,
